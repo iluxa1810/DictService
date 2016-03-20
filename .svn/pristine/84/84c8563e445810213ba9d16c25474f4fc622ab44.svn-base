@@ -1,0 +1,412 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.SqlClient;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.ServiceModel;
+using System.Text;
+using System.Transactions;
+using Common.DictServiceEnums.DictServiceEnums;
+using Common.Helpers;
+using Dapper;
+using WCFConsoleServer.Contracts;
+using WCFConsoleServer.Enums;
+using WCFConsoleServer.Models;
+using Version = WCFConsoleServer.Models.Version;
+
+namespace WCFConsoleServer.Services
+{
+    class DictionaryService : IFileUpload, IFileDownload, IData
+    {
+        readonly string RepoPath = Properties.Settings.Default.DictionaryRepo;
+        bool CheckExtension(string fileName, string pattern)
+        {
+            Console.WriteLine(Path.GetExtension(fileName));
+            if (Path.GetExtension(fileName) == pattern)
+            {
+                return true;
+            }
+            return false;
+        }
+        bool CheckPermission(User user, ActionEnum action)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var result = from t1 in db.UserPermissions
+                             where t1.User_id == user.User_id && t1.DateDel == null
+                             join t2 in db.Permissions on t1.Permission equals t2
+                             from t3 in t2.ActionTypes
+                             where t3.Action_id == (int)action
+                             join t4 in db.ActionTypes on t3 equals t4
+                             select new { f1 = t2.Permission_id };
+                if (!result.Any())
+                    return false;
+                else
+                    return true;
+            }
+        }
+        List<ActionEnum> GetPermissions(string userLogin)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var result = (from t1 in db.Users
+                              where t1.Login == userLogin && t1.DateDel == null
+                              join t2 in db.UserPermissions on t1 equals t2.User
+                              join t3 in db.Permissions on t2.Permission equals t3
+                              from t4 in t3.ActionTypes
+                              select new { t4 }).Distinct();
+                var list = new List<ActionEnum>();
+                foreach (var r in result)
+                {
+                    list.Add((ActionEnum)r.t4.Action_id);
+                }
+                return list;
+            }
+        }
+        public UploadResponse Upload(UploadRequest request)
+        {
+            try
+            {
+                DictionaryInfo dictInfo = request.DictInfo;
+                using (var db = new DictServiceEntities())
+                {
+                    var user = db.Users.SingleOrDefault(x => x.Login == dictInfo.SenderLogin);
+                    if (user == null)
+                    {
+                        user.Login = request.DictInfo.SenderLogin;
+                        db.Users.Add(user);
+                        db.SaveChanges();
+                    }
+                    if (!CheckExtension(dictInfo.FileName, ".mdb"))
+                    {
+                        throw new NotSupportedException();
+                    }
+                    if (!CheckPermission(user, dictInfo.Action))
+                    {
+                        throw new Exception("Нету прав!!!");
+                    }
+                    switch (dictInfo.Action)
+                    {
+                        case ActionEnum.AddDict:
+                            {
+                                AddNewDicionary(request.DictInfo, user, request.Stream);
+                                break;
+                            }
+                        case ActionEnum.EditDict:
+                            {
+                                RefreshDictionary(request.DictInfo, user, request.Stream);
+                                break;
+                            }
+                    }
+                    return new UploadResponse
+                    {
+                        UploadSucceeded = true
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new UploadResponse
+                {
+                    UploadSucceeded = false,
+                    Error = ex.ToString()
+                };
+            }
+        }
+        string GetUploadPath(int categoryId, string friendlyName, string fileName)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var category = db.DictionaryCategories.Single(x => x.Category_id == categoryId).Name;
+                //категория/название словаря/словарь.mdb
+                var uploadPath = Path.Combine(new[] { this.RepoPath, category, friendlyName, fileName });
+                return uploadPath;
+            }
+        }
+        private Dictionary AddNewDicionary(DictionaryInfo dictInfo, User user, Stream stream)
+        {
+            string uploadPath = GetUploadPath(dictInfo.Category_id, dictInfo.FriendlyName, dictInfo.FileName);
+            FileHelper.LoadFileFromStream(stream, uploadPath);
+            using (var db = new DictServiceEntities())
+            {
+                var dict = new Dictionary()
+                {
+                    FileName = dictInfo.FileName,
+                    Category_id = dictInfo.Category_id,
+                    Description = dictInfo.Description,
+                    PathToDict = uploadPath,
+                    FriendlyName = dictInfo.FriendlyName
+                };
+                db.Dictionaries.Add(dict);
+                var change = new UserChangeHistory()
+                {
+                    User_id = user.User_id,
+                    Dictionary_id = dict.Dictionary_id,
+                    Action_id = (int)dictInfo.Action,
+                    DateHistory = DateTime.Now
+                };
+                db.UserChangeHistories.Add(change);
+                db.SaveChanges();
+                return dict;
+            }
+        }
+        public DownloadResponse Download(DownloadRequest info)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var dict =
+                    db.Dictionaries.Single(x => x.Dictionary_id == info.Dictionary_id);
+                //using(Stream file = new FileStream(dict.PathToDict, FileMode.Open))
+                Stream file = new FileStream(dict.PathToDict, FileMode.Open);
+                return new DownloadResponse { stream = file, FileName = dict.FileName };
+            }
+        }
+        Dictionary RefreshDictionary(DictionaryInfo dictInfo, User user, Stream stream)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var dict = db.Dictionaries.Single(x => x.Dictionary_id == dictInfo.Dictionary_id);
+                dict.DictionaryState = db.DictionaryStates.Single(x => x.State_id == (int)DictionaryStateEnum.Refreshing);
+                db.Entry(dict).State = EntityState.Modified;
+                db.SaveChanges();
+                CreateDictionaryVersion(dict);
+                FileHelper.LoadFileFromStream(stream, dict.PathToDict);
+                dict.DictionaryState = db.DictionaryStates.Single(x => x.State_id == (int)DictionaryStateEnum.Available);
+                db.Entry(dict).State = EntityState.Modified;
+                var change = new UserChangeHistory()
+                {
+                    Dictionary_id = dict.Dictionary_id,
+                    Action_id = (int)ActionEnum.EditDict,
+                    DateHistory = DateTime.Now,
+                    User_id = user.User_id
+                };
+                db.UserChangeHistories.Add(change);
+                db.SaveChanges();
+                AddNewQueue(dict.Dictionary_id, ActionEnum.EditDict, change.UserHistory_id);
+                return dict;
+            }
+        }
+        void AddNewQueue(int dictId, ActionEnum action, int changeId)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                if (!db.DictionaryOnTasks.Any(x => x.Dictionary.Dictionary_id == dictId && x.DateDel == null))
+                {
+                    return;
+                }
+                var result = db.DictionaryOnTasks.Where(x => x.Dictionary.Dictionary_id == dictId && x.DateDel == null);
+                foreach (var element in result)
+                {
+                    var queue = new Queue()
+                    {
+                        Project_id = element.Project_id,
+                        Server_id = element.Server_id,
+                        Task = element.Task,
+                        Action_id = (int)action,
+                        UserHistory_id = changeId
+                    };
+                    db.Queues.Add(queue);
+                }
+                db.SaveChanges();
+            }
+        }
+        public void CreateDictionaryVersion(Dictionary dict)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                string PathToVersions = Path.Combine(Path.GetDirectoryName(dict.PathToDict), "Versions");
+                string newFileName = DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss_") + Path.GetFileName(dict.PathToDict);
+                if (!Directory.Exists(PathToVersions))
+                {
+                    Directory.CreateDirectory(PathToVersions);
+                }
+                File.Copy(dict.PathToDict, Path.Combine(PathToVersions, (newFileName)));
+                var version = new Version()
+                {
+                    Dictionary_id = dict.Dictionary_id,
+                    PathToVersion = PathToVersions,
+                    DateAdd = DateTime.Now
+                };
+                db.Versions.Add(version);
+                db.SaveChanges();
+            }
+        }
+        public DictionaryDataPackage GetDictionaryData(string UserLogin)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var pack = new DictionaryDataPackage();
+                pack.dictionaryDatas.AddRange(db.Dictionaries.Select(x => new DictionaryData()
+                {
+                    FriendlyName = x.FriendlyName,
+                    Category_id = x.Category_id,
+                    Dictionary_id = x.Dictionary_id,
+                    Description = x.Description,
+                    State = (DictionaryStateEnum)x.State_id
+                }));
+                pack.Categories.AddRange(db.DictionaryCategories.Select(x => new CategoryData()
+                {
+                    Category_id = x.Category_id,
+                    Name = x.Name
+                }));
+                //  pack.ActionEnums = GetPermissions(UserLogin);
+                return pack;
+            }
+        }
+        public List<CategoryData> GetCategories()
+        {
+            using (var db = new DictServiceEntities())
+            {
+                return db.DictionaryCategories.Select(x => new CategoryData { Name = x.Name, Category_id = x.Category_id }).ToList();
+            }
+        }
+        public void AddCategory(string name, string description)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var category = new DictionaryCategory()
+                {
+                    Name = name,
+                    Description = description
+                };
+                db.DictionaryCategories.Add(category);
+                db.SaveChanges();
+            }
+        }
+
+        public void ChangeDictionaryStatus(int dictionary_id, DictionaryStateEnum state)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var dict = db.Dictionaries.Single(x => x.Dictionary_id == dictionary_id);
+                dict.State_id = (int)state;
+                db.Entry(dict).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        string TransferDictionary(string oldPath, string categoryName, string friendlyName)
+        {
+            string newPath = Path.Combine(Properties.Settings.Default.DictionaryRepo, categoryName, friendlyName);
+            FileHelper.DirectoryCopy(Path.GetDirectoryName(oldPath), newPath, true);
+            FileHelper.ClearFolder(Path.GetDirectoryName(oldPath));
+            return newPath;
+        }
+        public void ChangeDictionaryInfo(DictionaryData dictData)
+        {
+            using (var db = new DictServiceEntities())
+            {//Проверка прав, удаление файлов, запись в хистори
+                var dict = db.Dictionaries.Single(x => x.Dictionary_id == dictData.Dictionary_id);
+                if (dictData.Category_id != dict.Category_id || dictData.FriendlyName != dict.FriendlyName)
+                {
+                    var categoryName = db.DictionaryCategories.Single(x => x.Category_id == dictData.Category_id).Name;
+                    var newPath = TransferDictionary(dict.PathToDict, categoryName, dictData.FriendlyName);
+                    var versions = db.Versions.Where(x => x.Dictionary_id == dict.Dictionary_id && x.DateDel == null).ToList();
+                    if (versions.Any())
+                    {
+                        versions.ForEach(x => x.PathToVersion = x.PathToVersion.Replace(Path.GetDirectoryName(x.PathToVersion), newPath));
+                    }
+                    dict.PathToDict = dict.PathToDict.Replace(Path.GetDirectoryName(dict.PathToDict), newPath);
+                    dict.Category_id = dictData.Category_id;
+                    dict.FriendlyName = dictData.FriendlyName;
+                }
+                dict.Description = dictData.Description;
+                db.SaveChanges();
+            }
+        }
+        public DictionaryProjectPackage GetProjectsData()
+        {
+            var pack = new DictionaryProjectPackage();
+            using (var db = new DictServiceEntities())
+            {
+                pack.TaskDatas = db.Tasks.Select(x => new TaskData()
+                {
+                    Name = x.Name,
+                    Project_id = x.Project_id,
+                    Server_id = x.Server_id,
+                    Task_id = x.Task_id,
+                    State = (TaskStateEnum)x.State_id
+                }).ToList();
+                pack.ProjectDatas =
+                    db.Projects.Select(x => new ProjectData()
+                    {
+                        Server_id = x.Server_id,
+                        Project_id = x.Project_id,
+                        Name = x.Name
+                    }).ToList();
+                pack.OctopusServerssDatas =
+                    db.OctopusServers.Select(
+                        x => new OctopusServerData()
+                        {
+                            ServerName = x.ServerName,
+                            Server_id = x.Server_id
+                        }).ToList();
+            }
+            return pack;
+        }
+        public string GetXmlFormConfig(int server_id, int project_id, int task_id)
+        {
+            string connString = string.Empty;
+            using (var db = new DictServiceEntities())
+            {
+                var server = db.OctopusServers.Single(x => x.Server_id == server_id);
+                connString =
+                    $"Data Source={server.ServerIp};Initial Catalog={server.OctopusDbName};Integrated Security=True";
+            }
+            using (var conn = new SqlConnection(connString))
+            {
+                return conn.Query<string>(@"select XMLConfig 
+                                            from [Task] 
+                                            where project_id=@project_id and task_id=@task_id",
+                    new { project_id, task_id }).Single();
+            }
+        }
+        public void UpdateXmlFormConfig(int server_id, int project_id, int task_id, string xmlConfig)
+        {
+            string connString = string.Empty;
+            using (var db = new DictServiceEntities())
+            {
+                var server = db.OctopusServers.Single(x => x.Server_id == server_id);
+                connString =
+                    $"Data Source={server.ServerIp};Initial Catalog={server.OctopusDbName};Integrated Security=True";
+            }
+            using (var conn = new SqlConnection(connString))
+            {
+                conn.Execute(@"UPDATE [Task]
+                                SET XMLConfig=@xmlConfig 
+                                where project_id=@project_id and task_id=@task_id",
+                    new { xmlConfig, project_id, task_id });
+            }
+        }
+        public DictionaryOnTaskPackage GetDictionariesOnTask(int server_id, int project_id, int task_id)
+        {
+            using (var db = new DictServiceEntities())
+            {
+                var result = new DictionaryOnTaskPackage();
+                result.dictionaryDatas = (from t1 in db.Dictionaries
+                                          where
+                                              t1.DictionaryOnTasks.Any(
+                                                  x => x.Server_id == server_id && x.Project_id == project_id && x.Task_id == task_id)
+                                          select new DictionaryData
+                                          {
+                                              FriendlyName = t1.FriendlyName,
+                                              Category_id = t1.Category_id,
+                                              Description = t1.Description,
+                                              Dictionary_id = t1.Dictionary_id
+                                          }).ToList();
+                result.Categories =
+                    db.DictionaryCategories.Select(x => new CategoryData() { Category_id = x.Category_id, Name = x.Name })
+                        .ToList();
+                result.DictionaryOnTaskDatas = db.DictionaryOnTasks.Select(x => new DictionaryOnTaskData()
+                {
+                    DictionaryOnTask_id = x.DictionaryOnTask_id,
+                    Dictionary_id = x.Dictionary_id
+                }).ToList();
+                return result;
+            }
+        }
+    }
+}

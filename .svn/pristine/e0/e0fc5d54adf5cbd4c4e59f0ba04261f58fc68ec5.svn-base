@@ -1,0 +1,250 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using FormClient.DictionaryService;
+using FormClient.Enums;
+
+namespace FormClient.Forms
+{
+    public partial class ImportDictionaryForm : Form
+    {
+        enum ShowDictEnum
+        {
+            OnChanges, Manual
+        }
+        ExtensionData Ext { get; set; }
+        SelectedDictionary selectedDictionary { get; set; }
+        public ImportDictionaryForm()
+        {
+            InitializeComponent();
+            Ext=new ExtensionData();
+            FillingComponents();
+        }
+
+        public ImportDictionaryForm(ExtensionData ext)
+        {
+            InitializeComponent();
+            Ext = ext;
+            FillingComponents();
+        }
+
+        void FillingComponents()
+        {
+            SetDataSetToComboBoxes();
+            tbShowDictShortcut.Text = Ext.Extension?.Attribute("ShowDictShortcut").Value ?? "";
+            tbClearValuesShortcut.Text = Ext.Extension?.Attribute("ClearValuesShortcut").Value ?? "";
+            tbInsertDictValuesShortcut.Text = Ext.Extension?.Attribute("InsertDictValuesShortcut").Value ?? "";
+            tbImportDbConnectionString.Text = Ext.Extension?.Attribute("ImportDbConnectionString").Value ?? "";
+            tbImportTableName.Text = Ext.Extension?.Attribute("ImportTableName").Value ?? "";
+            tbLinkGroupXRef.Text = Ext.Extension?.Attribute("LinkGroupXRef").Value ?? "";
+            tbResultMaxRowCount.Text = Ext.Extension?.Attribute("ResultMaxRowCount").Value ?? "10";
+            tbSearchFields.Text = Ext.Extension?.Attribute("SearchFields").Value ?? "<DocumentElement/>";
+            tbShowFormMaxCount.Text = Ext.Extension?.Attribute("ShowFormMaxCount").Value ?? "10";
+            tbId.Text = Ext.Extension?.Attribute("Id").Value ?? "";
+            tbType.Text = Ext.Extension?.Attribute("Type").Value ?? "";
+            cbShowDict.Text = Ext.Extension?.Attribute("ShowDict").Value ?? ShowDictEnum.OnChanges.ToString();
+            cbShowErrors.Text = Ext.Extension?.Attribute("ShowErrors").Value ?? BoolEnum.False.ToString();
+            cbApplyAndStep2NextField.Text = Ext.Extension?.Attribute("ApplyAndStep2NextField")?.Value ?? BoolEnum.False.ToString();
+            tbDictionaryName.Text = Ext.DictionaryName;
+            tbCategoryName.Text = Ext.CategoryName;
+        }
+        void SetDataSetToComboBoxes()
+        {
+            cbShowDict.DataSource = Enum.GetValues(typeof(ShowDictEnum));
+            cbApplyAndStep2NextField.DataSource = Enum.GetValues(typeof(BoolEnum));
+            cbShowErrors.DataSource = Enum.GetValues(typeof(BoolEnum));
+        }
+
+        private void btnAddSearchFields_Click(object sender, EventArgs e)
+        {
+            var dt = CreateSerachFieldsDataTable();
+            var reader = new StringReader(tbSearchFields.Text);
+            dt.ReadXml(reader);
+
+            using (var frm = new AddFieldsForm(dt))
+            {
+                frm.ShowDialog();
+                if (frm.DialogResult == DialogResult.OK)
+                {
+                    tbSearchFields.Text = frm.GetSearchFields();
+                }
+            }
+        }
+        static DataTable CreateSerachFieldsDataTable()
+        {
+            var dt = new DataTable("Fields");
+            DataColumn column;
+            column = dt.Columns.Add("id", typeof(Int32));
+            column.AutoIncrement = true;
+            column = dt.Columns.Add("XRef", typeof(string));
+            column.DefaultValue = "";
+            column = dt.Columns.Add("DbFieldName", typeof(string));
+            column.DefaultValue = "";
+            column = dt.Columns.Add("SearchRank", typeof(Int32));
+            column.DefaultValue = 0;
+            column = dt.Columns.Add("SearchDbFieldName", typeof(string));
+            column.DefaultValue = "";
+            column = dt.Columns.Add("SearchSPName", typeof(string));
+            column.DefaultValue = "";
+            column = dt.Columns.Add("Visible", typeof(bool));
+            column.DefaultValue = true;
+            column = dt.Columns.Add("ExactSearch", typeof(bool));
+            column.DefaultValue = false;
+            column = dt.Columns.Add("SearchFromStart", typeof(bool));
+            column.DefaultValue = true;
+            column = dt.Columns.Add("FilterColumn", typeof(bool));
+            column.DefaultValue = false;
+            column = dt.Columns.Add("CanBeEmpty", typeof(bool));
+            column.DefaultValue = false;
+            return dt;
+        }
+        void CheckDictAttr()
+        {
+            if (Ext.Extension.Attribute("ShowDictShortcut") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ShowDictShortcut", ""));
+            }
+            if (Ext.Extension.Attribute("ClearValuesShortcut") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ClearValuesShortcut", ""));
+            }
+            if (Ext.Extension.Attribute("InsertDictValuesShortcut") == null)
+            {
+                Ext.Extension.Add(new XAttribute("InsertDictValuesShortcut", ""));
+            }
+            if (Ext.Extension.Attribute("ImportDbConnectionString") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ImportDbConnectionString", ""));
+            }
+            if (Ext.Extension.Attribute("ImportTableName") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ImportTableName", ""));
+            }
+            if (Ext.Extension.Attribute("LinkGroupXRef") == null)
+            {
+                Ext.Extension.Add(new XAttribute("LinkGroupXRef", ""));
+            }
+            if (Ext.Extension.Attribute("ResultMaxRowCount") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ResultMaxRowCount", ""));
+            }
+            if (Ext.Extension.Attribute("SearchFields") == null)
+            {
+                Ext.Extension.Add(new XAttribute("SearchFields", ""));
+            }
+            if (Ext.Extension.Attribute("ShowFormMaxCount") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ShowFormMaxCount", ""));
+            }
+            if (Ext.Extension.Attribute("Id") == null)
+            {
+                Ext.Extension.Add(new XAttribute("Id", ""));
+            }
+            if (Ext.Extension.Attribute("Type") == null)
+            {
+                Ext.Extension.Add(new XAttribute("Type", ""));
+            }
+            if (Ext.Extension.Attribute("ShowDict") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ShowDict", ""));
+            }
+            if (Ext.Extension.Attribute("ShowErrors") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ShowErrors", ""));
+            }
+            if (Ext.Extension.Attribute("ApplyAndStep2NextField") == null)
+            {
+                Ext.Extension.Add(new XAttribute("ApplyAndStep2NextField", ""));
+            }
+        }
+
+        public ExtensionData GetNewExtElement()
+        {
+            return Ext;
+        }
+        void CreateDictNode()
+        {
+            Ext.Extension = new XElement("Ext");
+            Ext.Extension.Add(new XAttribute("ShowDictShortcut", ""));
+            Ext.Extension.Add(new XAttribute("ClearValuesShortcut", ""));
+            Ext.Extension.Add(new XAttribute("InsertDictValuesShortcut", ""));
+            Ext.Extension.Add(new XAttribute("ImportDbConnectionString", ""));
+            Ext.Extension.Add(new XAttribute("ImportTableName", ""));
+            Ext.Extension.Add(new XAttribute("LinkGroupXRef", ""));
+            Ext.Extension.Add(new XAttribute("ResultMaxRowCount", ""));
+            Ext.Extension.Add(new XAttribute("SearchFields", ""));
+            Ext.Extension.Add(new XAttribute("ShowFormMaxCount", ""));
+            Ext.Extension.Add(new XAttribute("Id", ""));
+            Ext.Extension.Add(new XAttribute("Type", ""));
+            Ext.Extension.Add(new XAttribute("ShowDict", ""));
+            Ext.Extension.Add(new XAttribute("ShowErrors", ""));
+            Ext.Extension.Add(new XAttribute("ApplyAndStep2NextField", ""));
+        }
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+
+            if (selectedDictionary != null)
+            {
+                Ext.CategoryName = selectedDictionary.CategoryName;
+                Ext.DictionaryName = selectedDictionary.DictionaryName;
+                Ext.Category_id = selectedDictionary.Category_id;
+                Ext.Dictionary_id = selectedDictionary.Dictionary_id;
+            }
+            if (Ext.Extension != null)
+            {
+                CheckDictAttr();
+            }
+            else
+            {
+                CreateDictNode();
+            }
+            AssignValueToXelement();
+            this.Close();
+        }
+        private void AssignValueToXelement()
+        {
+            Ext.Extension.Attribute("ShowDictShortcut").Value = tbShowDictShortcut.Text;
+            Ext.Extension.Attribute("ClearValuesShortcut").Value = tbClearValuesShortcut.Text;
+            Ext.Extension.Attribute("InsertDictValuesShortcut").Value = tbInsertDictValuesShortcut.Text;
+            Ext.Extension.Attribute("ImportDbConnectionString").Value = tbImportDbConnectionString.Text;
+            Ext.Extension.Attribute("ImportTableName").Value = tbImportTableName.Text;
+            Ext.Extension.Attribute("LinkGroupXRef").Value = tbLinkGroupXRef.Text;
+            Ext.Extension.Attribute("ResultMaxRowCount").Value = tbResultMaxRowCount.Text;
+            Ext.Extension.Attribute("SearchFields").Value = tbSearchFields.Text;
+            Ext.Extension.Attribute("ShowFormMaxCount").Value = tbShowFormMaxCount.Text;
+            Ext.Extension.Attribute("Id").Value = tbId.Text;
+            Ext.Extension.Attribute("Type").Value = tbType.Text;
+            Ext.Extension.Attribute("ShowDict").Value = cbShowDict.Text;
+            Ext.Extension.Attribute("ShowErrors").Value = cbShowErrors.Text;
+            Ext.Extension.Attribute("ApplyAndStep2NextField").Value = cbApplyAndStep2NextField.Text;
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void btnChangeDictionary_Click(object sender, EventArgs e)
+        {
+            using (var frm = new ChangeDictionaryForm())
+            {
+                frm.ShowDialog();
+                if (frm.DialogResult == DialogResult.OK)
+                {
+                    selectedDictionary = frm.GetSelectedDictionary();
+                    tbDictionaryName.Text = selectedDictionary.DictionaryName;
+                    tbCategoryName.Text = selectedDictionary.CategoryName;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,646 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DictServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ActionType">
+    <Key>
+      <PropertyRef Name="Action_id" />
+    </Key>
+    <Property Name="Action_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Queues" Relationship="Self.FK_Queue_ActionType" FromRole="ActionType" ToRole="Queue" />
+    <NavigationProperty Name="UserChangeHistories" Relationship="Self.FK_UserChangeHistory_Action" FromRole="ActionType" ToRole="UserChangeHistory" />
+    <NavigationProperty Name="Permissions" Relationship="Self.ActionTypePermission" FromRole="ActionType" ToRole="Permission" />
+  </EntityType>
+  <EntityType Name="ChangeType">
+    <Key>
+      <PropertyRef Name="Change_id" />
+    </Key>
+    <Property Name="Change_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="DictionaryChangeHistories" Relationship="Self.FK_DictionaryChangeHistory_ChangeType" FromRole="ChangeType" ToRole="DictionaryChangeHistory" />
+  </EntityType>
+  <EntityType Name="Dictionary">
+    <Key>
+      <PropertyRef Name="Dictionary_id" />
+    </Key>
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category_id" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State_id" Type="Int32" Nullable="false" />
+    <Property Name="PathToDict" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <Property Name="ParentDict_id" Type="Int32" />
+    <NavigationProperty Name="DictionaryCategory" Relationship="Self.FK_Dictionary_DictionaryCategory" FromRole="Dictionary" ToRole="DictionaryCategory" />
+    <NavigationProperty Name="DictionaryState" Relationship="Self.FK_Dictionary_DictionaryState" FromRole="Dictionary" ToRole="DictionaryState" />
+    <NavigationProperty Name="Dictionary1" Relationship="Self.FK_Dictionary_ParentDictionary" FromRole="Dictionary" ToRole="Dictionary1" />
+    <NavigationProperty Name="Dictionary2" Relationship="Self.FK_Dictionary_ParentDictionary" FromRole="Dictionary1" ToRole="Dictionary" />
+    <NavigationProperty Name="DictionaryChangeHistories" Relationship="Self.FK_DictionaryChangeHistory_Dictionary" FromRole="Dictionary" ToRole="DictionaryChangeHistory" />
+    <NavigationProperty Name="DictionaryOnTasks" Relationship="Self.FK_DictionaryOnTask_Dictionary" FromRole="Dictionary" ToRole="DictionaryOnTask" />
+    <NavigationProperty Name="Queues" Relationship="Self.FK_Queue_Dictionary" FromRole="Dictionary" ToRole="Queue" />
+    <NavigationProperty Name="UserChangeHistories" Relationship="Self.FK_UserChangeHistory_Dictionary" FromRole="Dictionary" ToRole="UserChangeHistory" />
+    <NavigationProperty Name="Versions" Relationship="Self.PK_Version_Dictionary" FromRole="Dictionary" ToRole="Version" />
+    <Property Name="FriendlyName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="DictionaryCategory">
+    <Key>
+      <PropertyRef Name="Category_id" />
+    </Key>
+    <Property Name="Category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Dictionaries" Relationship="Self.FK_Dictionary_DictionaryCategory" FromRole="DictionaryCategory" ToRole="Dictionary" />
+  </EntityType>
+  <EntityType Name="DictionaryChangeHistory">
+    <Key>
+      <PropertyRef Name="DictionaryHistory_id" />
+    </Key>
+    <Property Name="DictionaryHistory_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserHistory_id" Type="Int32" Nullable="false" />
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Change_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ChangeType" Relationship="Self.FK_DictionaryChangeHistory_ChangeType" FromRole="DictionaryChangeHistory" ToRole="ChangeType" />
+    <NavigationProperty Name="Dictionary" Relationship="Self.FK_DictionaryChangeHistory_Dictionary" FromRole="DictionaryChangeHistory" ToRole="Dictionary" />
+    <NavigationProperty Name="UserChangeHistory" Relationship="Self.FK_DictionaryChangeHistory_UserChangeHistory" FromRole="DictionaryChangeHistory" ToRole="UserChangeHistory" />
+  </EntityType>
+  <EntityType Name="DictionaryOnTask">
+    <Key>
+      <PropertyRef Name="DictionaryOnTask_id" />
+    </Key>
+    <Property Name="Server_id" Type="Int32" Nullable="false" />
+    <Property Name="Project_id" Type="Int32" Nullable="false" />
+    <Property Name="Task_id" Type="Int32" Nullable="false" />
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateSync" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Dictionary" Relationship="Self.FK_DictionaryOnTask_Dictionary" FromRole="DictionaryOnTask" ToRole="Dictionary" />
+    <NavigationProperty Name="Task" Relationship="Self.FK_DictionaryOnTask_Task" FromRole="DictionaryOnTask" ToRole="Task" />
+    <Property Name="DictionaryOnTask_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="DictionaryState">
+    <Key>
+      <PropertyRef Name="State_id" />
+    </Key>
+    <Property Name="State_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Dictionaries" Relationship="Self.FK_Dictionary_DictionaryState" FromRole="DictionaryState" ToRole="Dictionary" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Module_id" />
+    </Key>
+    <Property Name="Server_id" Type="Int32" Nullable="false" />
+    <Property Name="Module_id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FilePath" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="OctopusServer" Relationship="Self.FK_Module_OctopusServer" FromRole="Module" ToRole="OctopusServer" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Module" FromRole="Module" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="OctopusServer">
+    <Key>
+      <PropertyRef Name="Server_id" />
+    </Key>
+    <Property Name="Server_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServerIp" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OctopusDbName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Modules" Relationship="Self.FK_Module_OctopusServer" FromRole="OctopusServer" ToRole="Module" />
+    <NavigationProperty Name="Projects" Relationship="Self.FK_Project_OctopusServer" FromRole="OctopusServer" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="Permission_id" />
+    </Key>
+    <Property Name="Permission_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="UserPermissions" Relationship="Self.FK_UserPermission_Permission" FromRole="Permission" ToRole="UserPermission" />
+    <NavigationProperty Name="ActionTypes" Relationship="Self.ActionTypePermission" FromRole="Permission" ToRole="ActionType" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Project_id" />
+    </Key>
+    <Property Name="Server_id" Type="Int32" Nullable="false" />
+    <Property Name="Project_id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ZNName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="OctopusServer" Relationship="Self.FK_Project_OctopusServer" FromRole="Project" ToRole="OctopusServer" />
+    <NavigationProperty Name="ProjectState" Relationship="Self.FK_Project_ProjectState" FromRole="Project" ToRole="ProjectState" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Project" FromRole="Project" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="ProjectState">
+    <Key>
+      <PropertyRef Name="State_id" />
+    </Key>
+    <Property Name="State_id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Projects" Relationship="Self.FK_Project_ProjectState" FromRole="ProjectState" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Queue">
+    <Key>
+      <PropertyRef Name="Queue_id" />
+    </Key>
+    <Property Name="Queue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Server_id" Type="Int32" Nullable="false" />
+    <Property Name="Project_id" Type="Int32" Nullable="false" />
+    <Property Name="Task_id" Type="Int32" Nullable="false" />
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
+    <Property Name="Action_id" Type="Int32" Nullable="false" />
+    <Property Name="Error" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserHistory_id" Type="Int32" />
+    <NavigationProperty Name="ActionType" Relationship="Self.FK_Queue_ActionType" FromRole="Queue" ToRole="ActionType" />
+    <NavigationProperty Name="Dictionary" Relationship="Self.FK_Queue_Dictionary" FromRole="Queue" ToRole="Dictionary" />
+    <NavigationProperty Name="UserChangeHistory" Relationship="Self.FK_Queque_UserChangeHistory" FromRole="Queue" ToRole="UserChangeHistory" />
+    <NavigationProperty Name="Task" Relationship="Self.FK_Queue_Task" FromRole="Queue" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Project_id" />
+      <PropertyRef Name="Task_id" />
+    </Key>
+    <Property Name="Server_id" Type="Int32" Nullable="false" />
+    <Property Name="Project_id" Type="Int32" Nullable="false" />
+    <Property Name="Task_id" Type="Int32" Nullable="false" />
+    <Property Name="Module_id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DictionaryOnTasks" Relationship="Self.FK_DictionaryOnTask_Task" FromRole="Task" ToRole="DictionaryOnTask" />
+    <NavigationProperty Name="Module" Relationship="Self.FK_Task_Module" FromRole="Task" ToRole="Module" />
+    <NavigationProperty Name="Project" Relationship="Self.FK_Task_Project" FromRole="Task" ToRole="Project" />
+    <NavigationProperty Name="Queues" Relationship="Self.FK_Queue_Task" FromRole="Task" ToRole="Queue" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="UserChangeHistories" Relationship="Self.FK_UserChangeHistory_User" FromRole="User" ToRole="UserChangeHistory" />
+    <NavigationProperty Name="UserPermissions" Relationship="Self.FK_UserPermission_User" FromRole="User" ToRole="UserPermission" />
+  </EntityType>
+  <EntityType Name="UserChangeHistory">
+    <Key>
+      <PropertyRef Name="UserHistory_id" />
+    </Key>
+    <Property Name="UserHistory_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
+    <Property Name="Action_id" Type="Int32" Nullable="false" />
+    <Property Name="DateHistory" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="ActionType" Relationship="Self.FK_UserChangeHistory_Action" FromRole="UserChangeHistory" ToRole="ActionType" />
+    <NavigationProperty Name="Dictionary" Relationship="Self.FK_UserChangeHistory_Dictionary" FromRole="UserChangeHistory" ToRole="Dictionary" />
+    <NavigationProperty Name="DictionaryChangeHistories" Relationship="Self.FK_DictionaryChangeHistory_UserChangeHistory" FromRole="UserChangeHistory" ToRole="DictionaryChangeHistory" />
+    <NavigationProperty Name="Queues" Relationship="Self.FK_Queque_UserChangeHistory" FromRole="UserChangeHistory" ToRole="Queue" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserChangeHistory_User" FromRole="UserChangeHistory" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserPermission">
+    <Key>
+      <PropertyRef Name="UserPermission_id" />
+    </Key>
+    <Property Name="UserPermission_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_id" Type="Int32" Nullable="false" />
+    <Property Name="Permission_id" Type="Int32" Nullable="false" />
+    <Property Name="Give_User_id" Type="Int32" Nullable="false" />
+    <Property Name="Remove_User_id" Type="Int32" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Permission" Relationship="Self.FK_UserPermission_Permission" FromRole="UserPermission" ToRole="Permission" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserPermission_User" FromRole="UserPermission" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Version">
+    <Key>
+      <PropertyRef Name="Version_id" />
+    </Key>
+    <Property Name="Version_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
+    <Property Name="DateAdd" Type="DateTime" Precision="3" />
+    <Property Name="DateDel" Type="DateTime" Precision="3" />
+    <Property Name="PathToVersion" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Dictionary" Relationship="Self.PK_Version_Dictionary" FromRole="Version" ToRole="Dictionary" />
+  </EntityType>
+  <Association Name="FK_Queue_ActionType">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Action_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Action_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_Action">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Action_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="Action_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_ChangeType">
+    <End Role="ChangeType" Type="Self.ChangeType" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChangeType">
+        <PropertyRef Name="Change_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="Change_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_DictionaryCategory">
+    <End Role="DictionaryCategory" Type="Self.DictionaryCategory" Multiplicity="1" />
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DictionaryCategory">
+        <PropertyRef Name="Category_id" />
+      </Principal>
+      <Dependent Role="Dictionary">
+        <PropertyRef Name="Category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_DictionaryState">
+    <End Role="DictionaryState" Type="Self.DictionaryState" Multiplicity="1" />
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DictionaryState">
+        <PropertyRef Name="State_id" />
+      </Principal>
+      <Dependent Role="Dictionary">
+        <PropertyRef Name="State_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_ParentDictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="0..1" />
+    <End Role="Dictionary1" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Dictionary1">
+        <PropertyRef Name="ParentDict_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryOnTask_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="DictionaryOnTask" Type="Self.DictionaryOnTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="DictionaryOnTask">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queue_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_Version_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="Version" Type="Self.Version" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Version">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_UserChangeHistory">
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryOnTask_Task">
+    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="DictionaryOnTask" Type="Self.DictionaryOnTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Principal>
+      <Dependent Role="DictionaryOnTask">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module_OctopusServer">
+    <End Role="OctopusServer" Type="Self.OctopusServer" Multiplicity="1" />
+    <End Role="Module" Type="Self.Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OctopusServer">
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_Module">
+    <End Role="Module" Type="Self.Module" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Module_id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_OctopusServer">
+    <End Role="OctopusServer" Type="Self.OctopusServer" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OctopusServer">
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermission_Permission">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+    <End Role="UserPermission" Type="Self.UserPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="Permission_id" />
+      </Principal>
+      <Dependent Role="UserPermission">
+        <PropertyRef Name="Permission_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_ProjectState">
+    <End Role="ProjectState" Type="Self.ProjectState" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectState">
+        <PropertyRef Name="State_id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="State_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queque_UserChangeHistory">
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="0..1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="UserHistory_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queue_Task">
+    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermission_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserPermission" Type="Self.UserPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="UserPermission">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActionTypePermission">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="*" />
+    <End Role="Permission" Type="Self.Permission" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="DictServiceEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ActionTypes" EntityType="Self.ActionType" />
+    <EntitySet Name="ChangeTypes" EntityType="Self.ChangeType" />
+    <EntitySet Name="Dictionaries" EntityType="Self.Dictionary" />
+    <EntitySet Name="DictionaryCategories" EntityType="Self.DictionaryCategory" />
+    <EntitySet Name="DictionaryChangeHistories" EntityType="Self.DictionaryChangeHistory" />
+    <EntitySet Name="DictionaryOnTasks" EntityType="Self.DictionaryOnTask" />
+    <EntitySet Name="DictionaryStates" EntityType="Self.DictionaryState" />
+    <EntitySet Name="Modules" EntityType="Self.Module" />
+    <EntitySet Name="OctopusServers" EntityType="Self.OctopusServer" />
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <EntitySet Name="ProjectStates" EntityType="Self.ProjectState" />
+    <EntitySet Name="Queues" EntityType="Self.Queue" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tasks" EntityType="Self.Task" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="UserChangeHistories" EntityType="Self.UserChangeHistory" />
+    <EntitySet Name="UserPermissions" EntityType="Self.UserPermission" />
+    <EntitySet Name="Versions" EntityType="Self.Version" />
+    <AssociationSet Name="FK_Queue_ActionType" Association="Self.FK_Queue_ActionType">
+      <End Role="ActionType" EntitySet="ActionTypes" />
+      <End Role="Queue" EntitySet="Queues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_Action" Association="Self.FK_UserChangeHistory_Action">
+      <End Role="ActionType" EntitySet="ActionTypes" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_ChangeType" Association="Self.FK_DictionaryChangeHistory_ChangeType">
+      <End Role="ChangeType" EntitySet="ChangeTypes" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_DictionaryCategory" Association="Self.FK_Dictionary_DictionaryCategory">
+      <End Role="DictionaryCategory" EntitySet="DictionaryCategories" />
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_DictionaryState" Association="Self.FK_Dictionary_DictionaryState">
+      <End Role="DictionaryState" EntitySet="DictionaryStates" />
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_ParentDictionary" Association="Self.FK_Dictionary_ParentDictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="Dictionary1" EntitySet="Dictionaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_Dictionary" Association="Self.FK_DictionaryChangeHistory_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryOnTask_Dictionary" Association="Self.FK_DictionaryOnTask_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="DictionaryOnTask" EntitySet="DictionaryOnTasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queue_Dictionary" Association="Self.FK_Queue_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="Queue" EntitySet="Queues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_Dictionary" Association="Self.FK_UserChangeHistory_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="PK_Version_Dictionary" Association="Self.PK_Version_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionaries" />
+      <End Role="Version" EntitySet="Versions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_UserChangeHistory" Association="Self.FK_DictionaryChangeHistory_UserChangeHistory">
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistories" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryOnTask_Task" Association="Self.FK_DictionaryOnTask_Task">
+      <End Role="Task" EntitySet="Tasks" />
+      <End Role="DictionaryOnTask" EntitySet="DictionaryOnTasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module_OctopusServer" Association="Self.FK_Module_OctopusServer">
+      <End Role="OctopusServer" EntitySet="OctopusServers" />
+      <End Role="Module" EntitySet="Modules" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_Module" Association="Self.FK_Task_Module">
+      <End Role="Module" EntitySet="Modules" />
+      <End Role="Task" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_OctopusServer" Association="Self.FK_Project_OctopusServer">
+      <End Role="OctopusServer" EntitySet="OctopusServers" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermission_Permission" Association="Self.FK_UserPermission_Permission">
+      <End Role="Permission" EntitySet="Permissions" />
+      <End Role="UserPermission" EntitySet="UserPermissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_ProjectState" Association="Self.FK_Project_ProjectState">
+      <End Role="ProjectState" EntitySet="ProjectStates" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_Project" Association="Self.FK_Task_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="Task" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queque_UserChangeHistory" Association="Self.FK_Queque_UserChangeHistory">
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistories" />
+      <End Role="Queue" EntitySet="Queues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queue_Task" Association="Self.FK_Queue_Task">
+      <End Role="Task" EntitySet="Tasks" />
+      <End Role="Queue" EntitySet="Queues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_User" Association="Self.FK_UserChangeHistory_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermission_User" Association="Self.FK_UserPermission_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserPermission" EntitySet="UserPermissions" />
+    </AssociationSet>
+    <AssociationSet Name="ActionTypePermission" Association="Self.ActionTypePermission">
+      <End Role="ActionType" EntitySet="ActionTypes" />
+      <End Role="Permission" EntitySet="Permissions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

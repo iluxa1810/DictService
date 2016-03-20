@@ -1,0 +1,191 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using FormClient.DictionaryService;
+using Common.Helpers;
+using FormClient.Forms;
+using FormClient.Helpers;
+
+namespace FormClient
+{
+    public partial class MainForm : Form
+    {
+        public class TaskEventArgs : EventArgs
+        {
+            public string Name { get; set; }
+            public string Message { get; set; }
+            public string Status { get; set; }
+            public int Taskid { get; set; }
+        }
+
+        public delegate int TaskDelegate(object sender, TaskEventArgs e);
+        public delegate void RefreshStatusDelegate(object sender, TaskEventArgs e);
+        public event TaskDelegate StartTask;
+        public event RefreshStatusDelegate RefreshStatus;
+        public MainForm()
+        {
+            Thread.Sleep(1000);
+            InitializeComponent();
+            PrepareForm();
+            StartTask += AddNewTask;
+            RefreshStatus += RefreshTaskStatus;
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            DictionaryInfo dictInfo;
+            string path;
+            using (var form = new AddDictForm(categoryBox))
+            {
+                form.ShowDialog(this);
+                dictInfo = form.GetUploadData();
+                path = form.GetFilePath();
+            }
+            var id = StartTask(this, new TaskEventArgs() { Name = $"Добавление {dictInfo.FriendlyName}", Status = "Started" });
+            using (var client = new FileUploadClient())
+            {
+                Stream file = new FileStream(path, FileMode.Open);
+                await client.UploadAsync(dictInfo, file);
+            }
+            RefreshTaskStatus(this, new TaskEventArgs() { Status = "Complete", Taskid = id });
+        }
+
+        void PrepareForm()
+        {
+            using (var client = new DataClient())
+            {
+                var pack = client.GetData(AccountHelper.GetAccount());
+                DisableFunctions(pack.ActionEnums);
+                FillingDictGrid(pack.dictionaryDatas, pack.Categories, dictGridView);
+                FillingCategoryComboBox(categoryBox, pack.Categories);
+            }
+        }
+        void DisableFunctions(ActionEnum[] actions)
+        {
+            if (!actions.Contains(ActionEnum.AddDict))
+            {
+                addButton.Enabled = false;
+            }
+            if (!actions.Contains(ActionEnum.EditDict))
+            {
+                editDictButton.Enabled = false;
+            }
+        }
+        void FillingDictGrid(DictionaryData[] dictArray, CategoryData[] categoryArray, DataGridView dataGridView)
+        {
+            var result = from d in dictArray
+                         join c in categoryArray on d.Category_id equals c.Category_id
+                         select new { d.Dictionary_id, d.Description, d.FriendlyName, c.Name, d.State };
+            foreach (var i in result)
+            {
+                int rowNumber = dataGridView.Rows.Add();
+                dataGridView.Rows[rowNumber].Cells["Dictionary_id"].Value = i.Dictionary_id;
+                dataGridView.Rows[rowNumber].Cells["FriendlyName"].Value = i.FriendlyName;
+                dataGridView.Rows[rowNumber].Cells["CategoryName"].Value = i.Name;
+                dataGridView.Rows[rowNumber].Cells["Description"].Value = i.Description;
+                dataGridView.Rows[rowNumber].Cells["State"].Value = i.State;
+            }
+
+        }
+        void FillingCategoryComboBox(ComboBox comboBox, CategoryData[] categoryArray)
+        {
+            List<CategoryData> categories = categoryArray.ToList();
+            categories.Insert(0, new CategoryData { Name = "Все" });
+            comboBox.DataSource = categories;
+            comboBox.DisplayMember = "Name";
+            comboBox.ValueMember = "Category_id";
+            comboBox.Text = "Все";
+        }
+
+        private async void bDownload_Click(object sender, EventArgs e)
+        {
+            using (var client = new FileDownloadClient())
+            {
+                var dictId = (int)dictGridView.SelectedCells[0].Value;
+                var fileName = await client.DownloadAsync("", dictId);
+                var id = StartTask(this, new TaskEventArgs() { Name = $"Скачивание {fileName.FileName}", Status = "Started" });
+                var folderDialog = new FolderBrowserDialog();
+                folderDialog.ShowDialog();
+                var folder = folderDialog.SelectedPath;
+                if (folder != string.Empty)
+                {
+                    await FileHelper.LoadFileFromStreamAsync(fileName.stream, Path.Combine(folder, fileName.FileName));
+                }
+                RefreshTaskStatus(this,new TaskEventArgs() {Status = "Complete",Taskid = id});
+            }
+        }
+
+        private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((CategoryData)categoryBox.SelectedItem).Name == "Все")
+            {
+                foreach (DataGridViewRow row in dictGridView.Rows)
+                {
+                    row.Visible = true;
+                }
+                return;
+            }
+            foreach (DataGridViewRow row in dictGridView.Rows)
+            {
+                if (row.Cells[dictGridView.Columns["CategoryName"].Index].Value != ((CategoryData)categoryBox.SelectedItem).Name)
+                    row.Visible = false;
+                else
+                    row.Visible = true;
+            }
+        }
+
+        private void editDictButton_Click(object sender, EventArgs e)
+        {
+            if (dictGridView.SelectedCells[dictGridView.Columns["State"].Index].Value.ToString() != DictionaryStateEnum.Available.ToString())
+            {
+                MessageBox.Show("Сейчас словарь нельзя редактировать");
+                return;
+            }
+            var dictId = dictGridView.SelectedCells[dictGridView.Columns["Dictionary_id"].Index].Value.ToString();
+            var dictName = dictGridView.SelectedCells[dictGridView.Columns["FriendlyName"].Index].Value.ToString();
+            var categoryName = dictGridView.SelectedCells[dictGridView.Columns["CategoryName"].Index].Value.ToString();
+            var description = dictGridView.SelectedCells[dictGridView.Columns["Description"].Index].Value.ToString();
+            using (var form = new EditDictionaryForm(dictId, dictName, categoryName, description))
+            {
+                using (var client = new DataClient())
+                {
+                    client.ChangeDictionaryStatus(Convert.ToInt32(dictId), DictionaryStateEnum.Locked);
+                }
+                form.Owner = this;
+                form.ShowDialog();
+            }
+        }
+
+        private int AddNewTask(object sender, TaskEventArgs e)
+        {
+            int id = taskDGV.Rows.Add();
+            taskDGV.Rows[id].Cells["Id"].Value = id;
+            taskDGV.Rows[id].Cells["TaskName"].Value = e.Name;
+            taskDGV.Rows[id].Cells["Status"].Value = e.Status;
+            return id;
+        }
+        private void RefreshTaskStatus(object sender, TaskEventArgs e)
+        {
+            taskDGV.Rows[e.Taskid].Cells["Status"].Value = e.Status;
+        }
+
+        private void RefreshMainForm()
+        {
+            dictGridView.Rows.Clear();
+            PrepareForm();
+        }
+
+        private void refreshDataBtn_Click(object sender, EventArgs e)
+        {
+            RefreshMainForm();
+        }
+    }
+}

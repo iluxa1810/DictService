@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using FormEditor.Enums;
+
+namespace FormEditor.Forms
+{
+    public partial class SimpleDictionaryForm : Form
+    {
+        XElement Dict { get; set; }
+
+        enum SearchModeEnum
+        {
+            Seek, Select, DbQuery
+        }
+        enum ShowDictEnum
+        {
+            Always, OnChanges, OnFirstChange, No
+        }
+        public SimpleDictionaryForm()
+        {
+            InitializeComponent();
+            SetDataSetToComboBoxes();
+        }
+        public SimpleDictionaryForm(XElement dict)
+        {
+            InitializeComponent();
+            Dict = dict;
+            SetDataSetToComboBoxes();
+            tbId.Text = Dict.Attribute("Id").Value;
+            tbIds.Text = Dict.Attribute("Ids").Value;
+            tbType.Text = Dict.Attribute("Type").Value;
+            cbMultiSelect.Text = Dict.Attribute("MultiSelect")?.Value ?? BoolEnum.False.ToString();
+            tbMultiSelectSeparator.Text = Dict.Attribute("MultiSelectSeparator").Value;
+            cbSearchMode.Text = Dict.Attribute("SearchMode")?.Value ?? SearchModeEnum.Seek.ToString();
+            cbShowDict.Text = Dict.Attribute("ShowDict").Value;
+            cbOnlyDictValues.Text = Dict.Attribute("OnlyDictValues")?.Value ?? BoolEnum.False.ToString();
+            cbApplyAndStep2NextField.Text = Dict.Attribute("ApplyAndStep2NextField")?.Value ?? BoolEnum.False.ToString();
+            tbConnStr.Text = Dict.Attribute("ConnectionString").Value;
+            tbDataFieldName.Text = Dict.Attribute("DataFieldName").Value;
+            tbDataSourceType.Text = Dict.Attribute("DataSourceType").Value;
+            tbKeyFieldName.Text = Dict.Attribute("KeyFieldName").Value;
+            tbSource.Text = Dict.Attribute("KeyFieldName").Value;
+        }
+
+        void SetDataSetToComboBoxes()
+        {
+            cbMultiSelect.DataSource = Enum.GetValues(typeof(BoolEnum));
+            cbOnlyDictValues.DataSource = Enum.GetValues(typeof(BoolEnum));
+            cbApplyAndStep2NextField.DataSource = Enum.GetValues(typeof(BoolEnum));
+            cbSearchMode.DataSource = Enum.GetValues(typeof(SearchModeEnum));
+            cbShowDict.DataSource = Enum.GetValues(typeof(ShowDictEnum));
+        }
+
+        void CreateDictNode()
+        {
+            Dict = new XElement("Ext");
+            Dict.Add(new XAttribute("Id", ""));
+            Dict.Add(new XAttribute("Ids", ""));
+            Dict.Add(new XAttribute("Type", ""));
+            Dict.Add(new XAttribute("MultiSelect", ""));
+            Dict.Add(new XAttribute("MultiSelectSeparator", ""));
+            Dict.Add(new XAttribute("SearchMode", ""));
+            Dict.Add(new XAttribute("ShowDict", ""));
+            Dict.Add(new XAttribute("OnlyDictValues", ""));
+            Dict.Add(new XAttribute("ApplyAndStep2NextField", ""));
+            Dict.Add(new XAttribute("ConnectionString", ""));
+            Dict.Add(new XAttribute("DataFieldName", ""));
+            Dict.Add(new XAttribute("DataSourceType", ""));
+            Dict.Add(new XAttribute("KeyFieldName", ""));
+            Dict.Add(new XAttribute("Source", ""));
+        }
+
+        void CheckDictAttr()
+        {
+            if (Dict.Attribute("Id") == null)
+            {
+                Dict.Add(new XAttribute("Id", ""));
+            }
+            if (Dict.Attribute("Ids") == null)
+            {
+                Dict.Add(new XAttribute("Ids", ""));
+            }
+            if (Dict.Attribute("Type") == null)
+            {
+                Dict.Add(new XAttribute("Type", ""));
+            }
+            if (Dict.Attribute("MultiSelect") == null)
+            {
+                Dict.Add(new XAttribute("MultiSelect", ""));
+            }
+            if (Dict.Attribute("MultiSelectSeparator") == null)
+            {
+                Dict.Add(new XAttribute("MultiSelectSeparator", ""));
+            }
+            if (Dict.Attribute("SearchMode") == null)
+            {
+                Dict.Add(new XAttribute("SearchMode", ""));
+            }
+            if (Dict.Attribute("ShowDict") == null)
+            {
+                Dict.Add(new XAttribute("ShowDict", ""));
+            }
+            if (Dict.Attribute("OnlyDictValues") == null)
+            {
+                Dict.Add(new XAttribute("OnlyDictValues", ""));
+            }
+            if (Dict.Attribute("ApplyAndStep2NextField") == null)
+            {
+                Dict.Add(new XAttribute("ApplyAndStep2NextField", ""));
+            }
+            if (Dict.Attribute("ConnectionString") == null)
+            {
+                Dict.Add(new XAttribute("ConnectionString", ""));
+            }
+            if (Dict.Attribute("DataFieldName") == null)
+            {
+                Dict.Add(new XAttribute("DataFieldName", ""));
+            }
+            if (Dict.Attribute("DataSourceType") == null)
+            {
+                Dict.Add(new XAttribute("DataSourceType", ""));
+            }
+            if (Dict.Attribute("KeyFieldName") == null)
+            {
+                Dict.Add(new XAttribute("KeyFieldName", ""));
+            }
+            if (Dict.Attribute("KeyFieldName") == null)
+            {
+                Dict.Add(new XAttribute("KeyFieldName", ""));
+            }
+        }
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (Dict == null)
+            {
+                CreateDictNode();
+            }
+            else
+            {
+                CheckDictAttr();
+            }
+            AssignValueToXelement();
+            Close();
+        }
+        private void AssignValueToXelement()
+        {
+            Dict.Attribute("Id").Value = tbId.Text;
+            Dict.Attribute("Ids").Value = tbIds.Text;
+            Dict.Attribute("Type").Value = tbType.Text;
+            Dict.Attribute("MultiSelect").Value = cbMultiSelect.Text;
+            Dict.Attribute("MultiSelectSeparator").Value = tbMultiSelectSeparator.Text;
+            Dict.Attribute("SearchMode").Value = cbShowDict.Text;
+            Dict.Attribute("ShowDict").Value = cbShowDict.Text;
+            Dict.Attribute("OnlyDictValues").Value = cbOnlyDictValues.Text;
+            Dict.Attribute("ApplyAndStep2NextField").Value = cbApplyAndStep2NextField.Text;
+            Dict.Attribute("ConnectionString").Value = tbConnStr.Text;
+            Dict.Attribute("DataFieldName").Value = tbDataFieldName.Text;
+            Dict.Attribute("DataSourceType").Value = tbDataSourceType.Text;
+            Dict.Attribute("KeyFieldName").Value = tbKeyFieldName.Text;
+            Dict.Attribute("Source").Value = tbSource.Text;
+        }
+        public XElement GetNewDictionaryElement()
+        {
+            return Dict;
+        }
+    }
+}

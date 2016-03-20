@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" />
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" />
+  <xs:element name="UploadRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/Message" name="Stream" type="q1:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" name="DictInfo" nillable="true" type="q2:DictionaryInfo" />
+  <xs:element name="UploadResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadSucceeded" type="xs:boolean" />
+  <xs:element name="DownloadRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Dictionary_id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SenderLogin" nillable="true" type="xs:string" />
+  <xs:element name="DownloadResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.microsoft.com/Message" name="stream" type="q3:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FileName" nillable="true" type="xs:string" />
+  <xs:element name="GetDictionaryData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="user" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDictionaryDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" minOccurs="0" name="GetDictionaryDataResult" nillable="true" type="q4:DictionaryDataPackage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategories">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCategoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" minOccurs="0" name="GetCategoriesResult" nillable="true" type="q5:ArrayOfCategoryData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCategory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddCategoryResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeDictionaryStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="dictionary_id" type="xs:int" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" minOccurs="0" name="state" type="q6:DictionaryStateEnum" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeDictionaryStatusResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeDictionaryInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" minOccurs="0" name="dictData" nillable="true" type="q7:DictionaryData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeDictionaryInfoResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProjectsData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProjectsDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" minOccurs="0" name="GetProjectsDataResult" nillable="true" type="q8:DictionaryProjectPackage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXmlFormConfig">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="server_id" type="xs:int" />
+        <xs:element minOccurs="0" name="project_id" type="xs:int" />
+        <xs:element minOccurs="0" name="task_id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXmlFormConfigResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetXmlFormConfigResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateXmlFormConfig">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="server_id" type="xs:int" />
+        <xs:element minOccurs="0" name="project_id" type="xs:int" />
+        <xs:element minOccurs="0" name="task_id" type="xs:int" />
+        <xs:element minOccurs="0" name="xmlConfig" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateXmlFormConfigResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDictionariesOnTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="server_id" type="xs:int" />
+        <xs:element minOccurs="0" name="project_id" type="xs:int" />
+        <xs:element minOccurs="0" name="task_id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDictionariesOnTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" minOccurs="0" name="GetDictionariesOnTaskResult" nillable="true" type="q9:DictionaryOnTaskPackage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

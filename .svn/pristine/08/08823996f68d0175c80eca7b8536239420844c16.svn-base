@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <!--<system.web>
+    <compilation debug="true" />
+  </system.web>-->
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="WCFConsoleServer.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 --></configSections>
+  <connectionStrings>
+    <add name="WCFConsoleServer.Properties.Settings.DictServiceDB" connectionString="Data Source=Octopus-elar2;Initial Catalog=DictService;Integrated Security=True" providerName="System.Data.SqlClient" /><add name="DictServiceEntities" connectionString="metadata=res://*/Models.DictServiceModel.csdl|res://*/Models.DictServiceModel.ssdl|res://*/Models.DictServiceModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=ILUXA1810;initial catalog=DictService;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" /></connectionStrings>
+  <system.serviceModel>
+    <services>
+      <service behaviorConfiguration="DictionaryServiceBehavior"
+        name="WCFConsoleServer.Services.DictionaryService">
+        <endpoint address="upload" binding="basicHttpBinding" bindingConfiguration="FileTransferServiceBinding"
+          contract="WCFConsoleServer.Contracts.IFileUpload" />
+        <endpoint address="download" binding="basicHttpBinding" bindingConfiguration="FileTransferServiceBinding"
+          contract="WCFConsoleServer.Contracts.IFileDownload" />
+        <endpoint address="Data" binding="basicHttpBinding" contract="WCFConsoleServer.Contracts.IData" />
+        <endpoint address="mex" binding="mexHttpBinding" contract="IMetadataExchange" />
+      </service>
+    </services>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior name="DictionaryServiceBehavior">
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="false" />
+          <serviceDebug includeExceptionDetailInFaults="true" />
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="FileTransferServiceBinding" transferMode="Streamed" messageEncoding="Mtom" maxReceivedMessageSize="67108864" maxBufferSize="65536" closeTimeout="00:01:00" openTimeout="00:01:00" receiveTimeout="00:10:00" sendTimeout="00:01:00">
+          <security mode="None">
+            <transport clientCredentialType="None" />
+          </security>
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+  </system.serviceModel>
+  <applicationSettings>
+    <WCFConsoleServer.Properties.Settings>
+      <setting name="DictionaryRepo" serializeAs="String">
+        <value>D:\Dictionary</value>
+      </setting>
+    </WCFConsoleServer.Properties.Settings>
+  </applicationSettings>
+</configuration>

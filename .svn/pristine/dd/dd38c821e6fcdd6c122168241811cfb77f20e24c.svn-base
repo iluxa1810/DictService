@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using FormClient.DictionaryService;
+using Common.Helpers;
+using FormClient.Forms;
+using FormClient.Helpers;
+
+namespace FormClient
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
+            Thread.Sleep(1000);
+            InitializeComponent();
+            PrepareForm();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddDictForm(categoryBox))
+            {
+                form.ShowDialog(this);
+            }
+        }
+
+        void PrepareForm()
+        {
+            using (var client = new DataClient())
+            {
+                var pack = client.getData(AccountHelper.GetAccount());
+                DisableFunctions(pack.ActionEnums);
+                FillingDictGrid(pack.dictionaryDatas, pack.Categories, dictGridView);
+                FillingCategoryComboBox(categoryBox, pack.Categories);
+            }
+        }
+        void DisableFunctions(ActionEnum[] actions)
+        {
+            if (!actions.Contains(ActionEnum.AddDict))
+            {
+                addButton.Enabled = false;
+            }
+            if (!actions.Contains(ActionEnum.EditDict))
+            {
+                editDictButton.Enabled = false;
+            }
+        }
+        void FillingDictGrid(DictionaryData[] dictArray, CategoryData[] categoryArray, DataGridView  dataGridView)
+        {
+            var result = from d in dictArray
+                         join c in categoryArray on d.Category_id equals c.Category_id
+                         select new { d.Dictionary_id, d.Description, d.FriendlyName, c.Name };
+            foreach (var i in result)
+            {
+                int rowNumber = dataGridView.Rows.Add();
+                dataGridView.Rows[rowNumber].Cells["Dictionary_id"].Value = i.Dictionary_id;
+                dataGridView.Rows[rowNumber].Cells["FriendlyName"].Value = i.FriendlyName;
+                dataGridView.Rows[rowNumber].Cells["CategoryName"].Value = i.Name;
+                dataGridView.Rows[rowNumber].Cells["Description"].Value = i.Description;
+            }
+
+        }
+        void FillingCategoryComboBox(ComboBox comboBox,CategoryData[] categoryArray)
+        {
+            List<CategoryData> categories = categoryArray.ToList();
+            categories.Insert(0, new CategoryData { Category_id = -1, Name = "Все" });
+            comboBox.DataSource = categories;
+            comboBox.DisplayMember = "Name";
+            comboBox.ValueMember = "Category_id";
+            comboBox.SelectedIndex = 0;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var client = new FileDownloadClient())
+            {
+                var dictId = (int)dictGridView.SelectedCells[0].Value;
+                Stream file;
+                var fileName = client.Download("", dictId, out file);
+                var folderDialog = new FolderBrowserDialog();
+                folderDialog.ShowDialog();
+                var folder = folderDialog.SelectedPath;
+                if (folder != string.Empty)
+                {
+                    FileHelper.LoadFileFromStream(file, Path.Combine(folder, fileName));
+                }
+                MessageBox.Show("Файл скачен");
+            }
+        }
+
+        private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((CategoryData)categoryBox.SelectedItem).Name == "Все")
+            {
+                foreach (DataGridViewRow row in dictGridView.Rows)
+                {
+                    row.Visible = true;
+                }
+                return;
+            }
+            foreach (DataGridViewRow row in dictGridView.Rows)
+            {
+                if (row.Cells[dictGridView.Columns["CategoryName"].Index].Value != ((CategoryData)categoryBox.SelectedItem).Name)
+                    row.Visible = false;
+                else
+                    row.Visible = true;
+            }
+        }
+
+        private void editDictButton_Click(object sender, EventArgs e)
+        {
+            using (var form = new EditDictionaryForm())
+            {
+                form.ShowDialog();
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using FormEditor.Forms;
+
+namespace FormEditor
+{
+    public partial class Form1 : Form
+    {
+        XDocument XDoc { get; set; }
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        //string xml = File.ReadAllText(@"E:\cfg2.txt", Encoding.GetEncoding(1251));
+        //XmlDocument doc = new XmlDocument();
+        //doc.LoadXml(xml);
+        //    string decoded = doc.DocumentElement.Attributes["SearchFields"].InnerText;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var path = @"E:\cfg3.txt";
+            var reader = new StreamReader(path, Encoding.GetEncoding(1251));
+            XmlReader xmlReader = XmlReader.Create(reader);
+            XDoc = XDocument.Load(xmlReader);
+            var ext =
+                XDoc.XPathSelectElements("*//Extenders")
+                    .Descendants().ToList();
+            comboBox1.DataSource = ext;
+            //  comboBox1.DisplayMember = 
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var frm = new SimpleDictionaryForm((XElement)comboBox1.SelectedItem))
+            {
+                frm.ShowDialog();
+            }
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (var frm = new ImportDictionaryForm((XElement)comboBox1.SelectedItem))
+            {
+                frm.ShowDialog();
+                //XDoc.XPathSelectElement("*//Extenders").Add(frm.GetNewDictionaryElement());
+            }
+        }
+    }
+}

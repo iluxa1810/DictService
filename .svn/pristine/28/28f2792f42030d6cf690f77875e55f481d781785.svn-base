@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+
+namespace FormEditor.Forms
+{
+    public partial class SimpleDictionaryForm : Form
+    {
+        enum BoolEnum
+        {
+            False,True
+        }
+        enum SearchModeEnum
+        {
+            Seek, Select,DbQuery
+        }
+        enum ShowDictEnum
+        {
+            Always, OnChanges,OnFirstChange,No
+        }
+        public SimpleDictionaryForm()
+        {
+            InitializeComponent();
+        }
+        public SimpleDictionaryForm(XElement dict)
+        {
+            InitializeComponent();
+            cbMultySelect.DataSource = Enum.GetValues(typeof (BoolEnum));
+            cbOnlyDictValues.DataSource= Enum.GetValues(typeof(BoolEnum));
+            cbAutoNext.DataSource= Enum.GetValues(typeof(BoolEnum));
+            cbSearchMode.DataSource= Enum.GetValues(typeof(SearchModeEnum));
+            cbShowDict.DataSource= Enum.GetValues(typeof(ShowDictEnum));
+            tbId.Text = dict.Attribute("Id").Value;
+            tbIds.Text = dict.Attribute("Ids").Value;
+            tbType.Text = dict.Attribute("Type").Value;
+            cbMultySelect.Text= dict.Attribute("Type").Value;
+            tbMultiSelectSeparator.Text = dict.Attribute("MultiSelectSeparator").Value;
+            cbSearchMode.Text = dict.Attribute("SearchMode")?.Value??SearchModeEnum.Seek.ToString();
+            cbShowDict.Text= dict.Attribute("ShowDict").Value; 
+            cbOnlyDictValues.Text = dict.Attribute("OnlyDictValues")?.Value?? BoolEnum.False.ToString();
+            cbAutoNext.Text= dict.Attribute("ApplyAndStep2NextField")?.Value ?? BoolEnum.False.ToString();
+            tbConnStr.Text= dict.Attribute("ConnectionString").Value;
+            tbDataFieldName.Text = dict.Attribute("DataFieldName").Value;
+            tbDataSourceType.Text = dict.Attribute("DataSourceType").Value;
+            tbKeyFieldName.Text = dict.Attribute("KeyFieldName").Value;
+            tbSource.Text = dict.Attribute("Source").Value;
+        }
+    }
+}

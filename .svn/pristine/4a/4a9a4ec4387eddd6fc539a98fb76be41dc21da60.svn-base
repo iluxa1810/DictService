@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace WCFConsoleServer.Enums
+{
+   public enum DictionaryStateEnum
+    {
+        Available,
+        Locked,
+        Refreshing,
+        Deleted
+    }
+}

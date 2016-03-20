@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DictServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActionType">
+    <Key>
+      <PropertyRef Name="Action_id" />
+    </Key>
+    <Property Name="Action_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActionTypePermission">
+    <Key>
+      <PropertyRef Name="Action_id" />
+      <PropertyRef Name="Permission_id" />
+    </Key>
+    <Property Name="Action_id" Type="int" Nullable="false" />
+    <Property Name="Permission_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ChangeType">
+    <Key>
+      <PropertyRef Name="Change_id" />
+    </Key>
+    <Property Name="Change_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dictionary">
+    <Key>
+      <PropertyRef Name="Dictionary_id" />
+    </Key>
+    <Property Name="Dictionary_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FriendlyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Category_id" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="State_id" Type="int" Nullable="false" />
+    <Property Name="PathToDict" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="DateDel" Type="datetime" />
+    <Property Name="ParentDict_id" Type="int" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DictionaryCategory">
+    <Key>
+      <PropertyRef Name="Category_id" />
+    </Key>
+    <Property Name="Category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DictionaryChangeHistory">
+    <Key>
+      <PropertyRef Name="DictionaryHistory_id" />
+    </Key>
+    <Property Name="DictionaryHistory_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserHistory_id" Type="int" Nullable="false" />
+    <Property Name="Dictionary_id" Type="int" Nullable="false" />
+    <Property Name="Message" Type="nvarchar" MaxLength="255" />
+    <Property Name="Change_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DictionaryOnTask">
+    <Key>
+      <PropertyRef Name="DictionaryOnTask_id" />
+    </Key>
+    <Property Name="DictionaryOnTask_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Server_id" Type="int" Nullable="false" />
+    <Property Name="Project_id" Type="int" Nullable="false" />
+    <Property Name="Task_id" Type="int" Nullable="false" />
+    <Property Name="Dictionary_id" Type="int" Nullable="false" />
+    <Property Name="DateAdded" Type="datetime" Nullable="false" />
+    <Property Name="DateSync" Type="datetime" Nullable="false" />
+    <Property Name="DateDel" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DictionaryState">
+    <Key>
+      <PropertyRef Name="State_id" />
+    </Key>
+    <Property Name="State_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Module">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Module_id" />
+    </Key>
+    <Property Name="Server_id" Type="int" Nullable="false" />
+    <Property Name="Module_id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="FilePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="DateDel" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OctopusServer">
+    <Key>
+      <PropertyRef Name="Server_id" />
+    </Key>
+    <Property Name="Server_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServerIp" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="OctopusDbName" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="Permission_id" />
+    </Key>
+    <Property Name="Permission_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Project_id" />
+    </Key>
+    <Property Name="Server_id" Type="int" Nullable="false" />
+    <Property Name="Project_id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ZNName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="State_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectState">
+    <Key>
+      <PropertyRef Name="State_id" />
+    </Key>
+    <Property Name="State_id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Queue">
+    <Key>
+      <PropertyRef Name="Queue_id" />
+    </Key>
+    <Property Name="Queue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Server_id" Type="int" Nullable="false" />
+    <Property Name="Project_id" Type="int" Nullable="false" />
+    <Property Name="Task_id" Type="int" Nullable="false" />
+    <Property Name="Dictionary_id" Type="int" Nullable="false" />
+    <Property Name="Action_id" Type="int" Nullable="false" />
+    <Property Name="Error" Type="nvarchar" MaxLength="255" />
+    <Property Name="UserHistory_id" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="Server_id" />
+      <PropertyRef Name="Project_id" />
+      <PropertyRef Name="Task_id" />
+    </Key>
+    <Property Name="Server_id" Type="int" Nullable="false" />
+    <Property Name="Project_id" Type="int" Nullable="false" />
+    <Property Name="Task_id" Type="int" Nullable="false" />
+    <Property Name="Module_id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateDel" Type="datetime" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateDel" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UserChangeHistory">
+    <Key>
+      <PropertyRef Name="UserHistory_id" />
+    </Key>
+    <Property Name="UserHistory_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
+    <Property Name="Dictionary_id" Type="int" Nullable="false" />
+    <Property Name="Action_id" Type="int" Nullable="false" />
+    <Property Name="DateHistory" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserPermission">
+    <Key>
+      <PropertyRef Name="UserPermission_id" />
+    </Key>
+    <Property Name="UserPermission_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_id" Type="int" Nullable="false" />
+    <Property Name="Permission_id" Type="int" Nullable="false" />
+    <Property Name="Give_User_id" Type="int" Nullable="false" />
+    <Property Name="Remove_User_id" Type="int" />
+    <Property Name="DateDel" Type="datetime" />
+    <Property Name="DateAdded" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Version">
+    <Key>
+      <PropertyRef Name="Version_id" />
+    </Key>
+    <Property Name="Version_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dictionary_id" Type="int" Nullable="false" />
+    <Property Name="DateAdd" Type="datetime" />
+    <Property Name="DateDel" Type="datetime" />
+    <Property Name="PathToVersion" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <Association Name="FK_ActionTypePermission_ActionType">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+    <End Role="ActionTypePermission" Type="Self.ActionTypePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Action_id" />
+      </Principal>
+      <Dependent Role="ActionTypePermission">
+        <PropertyRef Name="Action_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActionTypePermission_Permission">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+    <End Role="ActionTypePermission" Type="Self.ActionTypePermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="Permission_id" />
+      </Principal>
+      <Dependent Role="ActionTypePermission">
+        <PropertyRef Name="Permission_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_DictionaryCategory">
+    <End Role="DictionaryCategory" Type="Self.DictionaryCategory" Multiplicity="1" />
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DictionaryCategory">
+        <PropertyRef Name="Category_id" />
+      </Principal>
+      <Dependent Role="Dictionary">
+        <PropertyRef Name="Category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_DictionaryState">
+    <End Role="DictionaryState" Type="Self.DictionaryState" Multiplicity="1" />
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DictionaryState">
+        <PropertyRef Name="State_id" />
+      </Principal>
+      <Dependent Role="Dictionary">
+        <PropertyRef Name="State_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dictionary_ParentDictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="0..1" />
+    <End Role="Dictionary1" Type="Self.Dictionary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Dictionary1">
+        <PropertyRef Name="ParentDict_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_ChangeType">
+    <End Role="ChangeType" Type="Self.ChangeType" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChangeType">
+        <PropertyRef Name="Change_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="Change_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryChangeHistory_UserChangeHistory">
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="1" />
+    <End Role="DictionaryChangeHistory" Type="Self.DictionaryChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Principal>
+      <Dependent Role="DictionaryChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryOnTask_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="DictionaryOnTask" Type="Self.DictionaryOnTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="DictionaryOnTask">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DictionaryOnTask_Task">
+    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="DictionaryOnTask" Type="Self.DictionaryOnTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Principal>
+      <Dependent Role="DictionaryOnTask">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Module_OctopusServer">
+    <End Role="OctopusServer" Type="Self.OctopusServer" Multiplicity="1" />
+    <End Role="Module" Type="Self.Module" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OctopusServer">
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_OctopusServer">
+    <End Role="OctopusServer" Type="Self.OctopusServer" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OctopusServer">
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_ProjectState">
+    <End Role="ProjectState" Type="Self.ProjectState" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectState">
+        <PropertyRef Name="State_id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="State_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queque_UserChangeHistory">
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="0..1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserChangeHistory">
+        <PropertyRef Name="UserHistory_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="UserHistory_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queue_ActionType">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Action_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Action_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queue_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Queue_Task">
+    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="Queue" Type="Self.Queue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Principal>
+      <Dependent Role="Queue">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Task_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_Module">
+    <End Role="Module" Type="Self.Module" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Module_id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="Server_id" />
+        <PropertyRef Name="Module_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Server_id" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="Project_id" />
+        <PropertyRef Name="Server_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_Action">
+    <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionType">
+        <PropertyRef Name="Action_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="Action_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserChangeHistory_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserChangeHistory" Type="Self.UserChangeHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="UserChangeHistory">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermission_Permission">
+    <End Role="Permission" Type="Self.Permission" Multiplicity="1" />
+    <End Role="UserPermission" Type="Self.UserPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permission">
+        <PropertyRef Name="Permission_id" />
+      </Principal>
+      <Dependent Role="UserPermission">
+        <PropertyRef Name="Permission_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermission_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserPermission" Type="Self.UserPermission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="UserPermission">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PK_Version_Dictionary">
+    <End Role="Dictionary" Type="Self.Dictionary" Multiplicity="1" />
+    <End Role="Version" Type="Self.Version" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dictionary">
+        <PropertyRef Name="Dictionary_id" />
+      </Principal>
+      <Dependent Role="Version">
+        <PropertyRef Name="Dictionary_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DictServiceModelStoreContainer">
+    <EntitySet Name="ActionType" EntityType="Self.ActionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ActionTypePermission" EntityType="Self.ActionTypePermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChangeType" EntityType="Self.ChangeType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DictionaryCategory" EntityType="Self.DictionaryCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DictionaryChangeHistory" EntityType="Self.DictionaryChangeHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DictionaryOnTask" EntityType="Self.DictionaryOnTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DictionaryState" EntityType="Self.DictionaryState" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OctopusServer" EntityType="Self.OctopusServer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectState" EntityType="Self.ProjectState" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Queue" EntityType="Self.Queue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserChangeHistory" EntityType="Self.UserChangeHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPermission" EntityType="Self.UserPermission" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Version" EntityType="Self.Version" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ActionTypePermission_ActionType" Association="Self.FK_ActionTypePermission_ActionType">
+      <End Role="ActionType" EntitySet="ActionType" />
+      <End Role="ActionTypePermission" EntitySet="ActionTypePermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ActionTypePermission_Permission" Association="Self.FK_ActionTypePermission_Permission">
+      <End Role="Permission" EntitySet="Permission" />
+      <End Role="ActionTypePermission" EntitySet="ActionTypePermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_DictionaryCategory" Association="Self.FK_Dictionary_DictionaryCategory">
+      <End Role="DictionaryCategory" EntitySet="DictionaryCategory" />
+      <End Role="Dictionary" EntitySet="Dictionary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_DictionaryState" Association="Self.FK_Dictionary_DictionaryState">
+      <End Role="DictionaryState" EntitySet="DictionaryState" />
+      <End Role="Dictionary" EntitySet="Dictionary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dictionary_ParentDictionary" Association="Self.FK_Dictionary_ParentDictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="Dictionary1" EntitySet="Dictionary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_ChangeType" Association="Self.FK_DictionaryChangeHistory_ChangeType">
+      <End Role="ChangeType" EntitySet="ChangeType" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_Dictionary" Association="Self.FK_DictionaryChangeHistory_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryChangeHistory_UserChangeHistory" Association="Self.FK_DictionaryChangeHistory_UserChangeHistory">
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistory" />
+      <End Role="DictionaryChangeHistory" EntitySet="DictionaryChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryOnTask_Dictionary" Association="Self.FK_DictionaryOnTask_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="DictionaryOnTask" EntitySet="DictionaryOnTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DictionaryOnTask_Task" Association="Self.FK_DictionaryOnTask_Task">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="DictionaryOnTask" EntitySet="DictionaryOnTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Module_OctopusServer" Association="Self.FK_Module_OctopusServer">
+      <End Role="OctopusServer" EntitySet="OctopusServer" />
+      <End Role="Module" EntitySet="Module" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_OctopusServer" Association="Self.FK_Project_OctopusServer">
+      <End Role="OctopusServer" EntitySet="OctopusServer" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_ProjectState" Association="Self.FK_Project_ProjectState">
+      <End Role="ProjectState" EntitySet="ProjectState" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queque_UserChangeHistory" Association="Self.FK_Queque_UserChangeHistory">
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistory" />
+      <End Role="Queue" EntitySet="Queue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queue_ActionType" Association="Self.FK_Queue_ActionType">
+      <End Role="ActionType" EntitySet="ActionType" />
+      <End Role="Queue" EntitySet="Queue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queue_Dictionary" Association="Self.FK_Queue_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="Queue" EntitySet="Queue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Queue_Task" Association="Self.FK_Queue_Task">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="Queue" EntitySet="Queue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_Module" Association="Self.FK_Task_Module">
+      <End Role="Module" EntitySet="Module" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_Project" Association="Self.FK_Task_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_Action" Association="Self.FK_UserChangeHistory_Action">
+      <End Role="ActionType" EntitySet="ActionType" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_Dictionary" Association="Self.FK_UserChangeHistory_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserChangeHistory_User" Association="Self.FK_UserChangeHistory_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserChangeHistory" EntitySet="UserChangeHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermission_Permission" Association="Self.FK_UserPermission_Permission">
+      <End Role="Permission" EntitySet="Permission" />
+      <End Role="UserPermission" EntitySet="UserPermission" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermission_User" Association="Self.FK_UserPermission_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserPermission" EntitySet="UserPermission" />
+    </AssociationSet>
+    <AssociationSet Name="PK_Version_Dictionary" Association="Self.PK_Version_Dictionary">
+      <End Role="Dictionary" EntitySet="Dictionary" />
+      <End Role="Version" EntitySet="Version" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

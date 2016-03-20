@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <Editor>
+    <Position>1</Position>
+    <Schema>
+      <root>
+        <Form XRef="root" EnabledConstraint="" BackColor="White" DeleteConstraint="" VisibleConstraint="" ImageOffset="-1, -1" Id="root" RepeatableConstraint="">
+          <Group IsTableRow="True" VisibleConstraint="" ImageOffset="-1, -1" DeleteConstraint="" EnabledConstraint="" Visible="False" BackColor="White" Id="Group1" RepeatableConstraint="" DrawTableBorders="False">
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Ctrl+Q - Неразборчивый почерк" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label7" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Ctrl+W - Неверная разметка" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label13" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Ctrl+E - Ошибка сепарации" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label12" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Ctrl+R - Проблемный образ" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label11" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Ctrl+~ - Очистить поле" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label14" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Alt+~ - Очистить все поля" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 8.25pt, style=Bold" Id="Label15" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="ControlDark" RepeatableConstraint="" />
+          </Group>
+          <Group IsTableRow="True" XRef="Labels" ImageOffset="-1, -1" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" BackColor="White" Id="Labels" Description="Group1" RepeatableConstraint="" DrawTableBorders="False">
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" VisibleConstraint="" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" Visible="False" ImageOffset="0, 0" ctrl.Text="№" ctrl.Font="Arial, 9.75pt, style=Bold" Id="Label" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="Highlight" RepeatableConstraint="" />
+            <Control ColumnWidth="5" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" VisibleConstraint="" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" Visible="False" ImageOffset="0, 0" ctrl.Text="Награда" ctrl.Font="Arial, 9.75pt, style=Bold" Id="Label10" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="Highlight" RepeatableConstraint="" />
+            <Control ColumnWidth="15" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="№ награды" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 9.75pt, style=Bold" Id="Label4" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="Highlight" RepeatableConstraint="" />
+            <Control ColumnWidth="15" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="№ приказа" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 9.75pt, style=Bold" Id="Label5" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="Highlight" RepeatableConstraint="" />
+            <Control ColumnWidth="15" ControlTypeName="System.Windows.Forms.Label, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ctrl.Text="Дата приказа" ctrl.UseCompatibleTextRendering="True" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Arial, 9.75pt, style=Bold" Id="Label6" ctrl.TextAlign="MiddleCenter" BindedProperty="" ctrl.ForeColor="Highlight" RepeatableConstraint="" />
+          </Group>
+          <Group IsTableRow="True" XRef="TableRow" ImageOffset="-1, -1" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" BackColor="White" Id="TableRow" Description="Group1" RepeatableConstraint="" TableBorderColor="AppWorkspace">
+            <Group ColumnWidth="5" VisibleConstraint="" BackColor="White" DeleteConstraint="" Visible="False" ImageOffset="-1, -1" EnabledConstraint="" Id="NumGroup" Description="Group1" RepeatableConstraint="">
+              <Control ColumnWidth="5" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" EnabledConstraint="" Description="Num1" DeleteConstraint="" Enabled="False" VisibleConstraint="" ctrl.LabelFont="Arial, 12pt" ImageOffset="-1, -1" ctrl.Font="Microsoft Sans Serif, 9.75pt, style=Bold" ctrl.LabelText="" Id="Num" BindedProperty="Text" ctrl.LabelTextColor="Navy" XRef="Num" RepeatableConstraint="" />
+            </Group>
+            <Group ColumnWidth="5" VisibleConstraint="" BackColor="White" DeleteConstraint="" Visible="False" ImageOffset="-1, -1" EnabledConstraint="" Id="PrNagrGroup" Description="Group1" RepeatableConstraint="">
+              <Control ColumnWidth="5" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" ctrl.LabelTextColor="Navy" Description="Num1" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ctrl.LabelFont="Arial, 12pt" ImageOffset="-1, -1" ctrl.Font="Microsoft Sans Serif, 9.75pt, style=Bold" ctrl.LabelText="" Id="PrNagr" BindedProperty="Text" XRef="PrNagr_1" RepeatableConstraint="" />
+            </Group>
+            <Group ColumnWidth="15" EnabledConstraint="" BackColor="White" DeleteConstraint="" VisibleConstraint="" ImageOffset="-1, -1" Id="NumNagrGroup" Description="Group4" RepeatableConstraint="">
+              <Control ColumnWidth="15" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" ctrl.LabelTextColor="Navy" ctrl.LabelFont="Arial, 12pt" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, -1" ctrl.Font="Arial, 9.75pt, style=Bold" ctrl.LabelText="" Id="NumNagr" BindedProperty="Text" XRef="NumNagr_1" RepeatableConstraint="" />
+            </Group>
+            <Group ColumnWidth="15" EnabledConstraint="" BackColor="White" DeleteConstraint="" VisibleConstraint="" ImageOffset="-1, -1" Id="NumPrikazGroup" Description="Group4" RepeatableConstraint="">
+              <Control ColumnWidth="15" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" ctrl.LabelTextColor="Navy" ctrl.LabelFont="Arial, 12pt" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, -1" ctrl.Font="Arial, 9.75pt, style=Bold" ctrl.LabelText="" Id="NumPrikaz" BindedProperty="Text" XRef="NumPrikaz_1" RepeatableConstraint="" />
+            </Group>
+            <Group ColumnWidth="15" EnabledConstraint="" BackColor="White" DeleteConstraint="" VisibleConstraint="" ImageOffset="-1, -1" Id="DatePrikazGroup" Description="Group4" RepeatableConstraint="">
+              <Control ColumnWidth="15" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" ctrl.LabelTextColor="Navy" ctrl.LabelFont="Arial, 12pt" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, -1" ctrl.Font="Arial, 9.75pt, style=Bold" ctrl.LabelText="" Id="DatePrikaz" BindedProperty="Text" XRef="DatePrikaz_1" RepeatableConstraint="" />
+            </Group>
+            <Group ColumnWidth="5" VisibleConstraint="" BackColor="White" DeleteConstraint="" Visible="False" ImageOffset="-1, -1" EnabledConstraint="" Id="MarkupGroup" Description="Group10" RepeatableConstraint="">
+              <Control ColumnWidth="5" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" VisibleConstraint="" Description="Markup1" DeleteConstraint="" Enabled="False" Visible="False" ctrl.LabelFont="Arial, 12pt" ImageOffset="-1, -1" EnabledConstraint="" ctrl.LabelText="" Id="Markup" BindedProperty="Text" ctrl.LabelTextColor="Navy" XRef="Markup" RepeatableConstraint="" />
+            </Group>
+          </Group>
+          <Control ctrl.LabelFont="Arial, 12pt" ControlTypeName="Octopus.ClientUIControls.OETextBox, BaseClientXmlEditor, Version=1.0.0.1, Culture=neutral, PublicKeyToken=null" ctrl.LabelTextColor="Navy" Description="OETextBox" DeleteConstraint="" EnabledConstraint="" VisibleConstraint="" ImageOffset="0, 0" ctrl.Font="Microsoft Sans Serif, 11.25pt, style=Bold" ctrl.LabelText="Комментарий:" Id="Comments" BindedProperty="Text" XRef="Comments" RepeatableConstraint="" />
+        </Form>
+        <Extenders>
+          <Ext Id="SimpleDictionary" ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\opn-1\Octopus\ClientTools\Apex-2012-11-02_20131212_001\MemorialDictionary_2010-01-27.mdb;Persist Security Info=False" SearchMode="Select" KeyFieldName="Name" ApplyAndStep2NextField="True" Ids="Name" Source="Name" DataFieldName="Name" MultiSelectSeparator=" " Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" DataSourceType="Table" />
+          <Ext Id="SimpleDictionary" ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\opn-1\Octopus\ClientTools\Apex-2012-11-02_20131212_001\MemorialDictionary_2010-01-27.mdb;Persist Security Info=False" SearchMode="Select" KeyFieldName="Otch" ApplyAndStep2NextField="True" Ids="Otch" Source="Otch" DataFieldName="Otch" MultiSelectSeparator=" " Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" DataSourceType="Table" />
+          <Ext Pattern="^((([0-2][0-9]|3[01])0[1-9]|([0-2][0-9]|3[01])1[0-2])?(18[6-9]\d|[0-4]\d)|-)$" Ids="Date:DatePriz" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker" />
+          <Ext Filter="TrimEnabled:{Нет};RemoveDoubleSpacesEnabled:{Нет}" Ruler="AAEAAAD/////AQAAAAAAAAAMAgAAAE1SZWdleENoZWNrZXJzX2V4dGVuZGVyLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAIFJlZ2V4Q2hlY2tlcnMuRGF0ZVJlZ2V4Q29sbGVjdG9yAwAAABVSZWdleENvbGxlY3RvckJhc2UrX2wTUmVnZXhCYXNlK19lcnJvck1zZxJSZWdleEJhc2UrX2VuYWJsZWQDAQCLAVN5c3RlbS5Db2xsZWN0aW9ucy5HZW5lcmljLkxpc3RgMVtbUmVnZXhDaGVja2Vycy5SZWdleEJhc2UsIFJlZ2V4Q2hlY2tlcnNfZXh0ZW5kZXIsIFZlcnNpb249MS4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsXV0BAgAAAAkDAAAABgQAAAAk0J7RiNC40LHQutCwINGE0L7RgNC80LDRgtCwINC00LDRgtGLAQQDAAAAiwFTeXN0ZW0uQ29sbGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW1JlZ2V4Q2hlY2tlcnMuUmVnZXhCYXNlLCBSZWdleENoZWNrZXJzX2V4dGVuZGVyLCBWZXJzaW9uPTEuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbF1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24EAAAZUmVnZXhDaGVja2Vycy5SZWdleEJhc2VbXQIAAAAICAkFAAAACAAAAAgAAAAHBQAAAAABAAAACAAAAAQXUmVnZXhDaGVja2Vycy5SZWdleEJhc2UCAAAACQYAAAAJBwAAAAkIAAAACQkAAAAJCgAAAAkLAAAACQwAAAAJDQAAAAwOAAAASVN5c3RlbSwgVmVyc2lvbj0yLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFBgAAACBSZWdleENoZWNrZXJzLkRhdGVZWVJlZ2V4Q2hlY2tlcgkAAAAIX2NlbnR1cnkIX21pbkRhdGUIX21heERhdGUZRGF0ZVJlZ2V4Q2hlY2tlcitfbWluRGF0ZRlEYXRlUmVnZXhDaGVja2VyK19tYXhEYXRlF0RhdGVSZWdleENoZWNrZXIrX3JlZ2V4HERhdGVSZWdleENoZWNrZXIrX2RhdGVGb3JtYXQTUmVnZXhCYXNlK19lcnJvck1zZxJSZWdleEJhc2UrX2VuYWJsZWQBAAAAAAQBAQANDQ0NJFN5c3RlbS5UZXh0LlJlZ3VsYXJFeHByZXNzaW9ucy5SZWdleA4AAAABAgAAAAYPAAAAAjE5AEBXIFMFUQgAgHodOSHBCABAVyBTBVEIAIB6HTkhwQgJEAAAAAYRAAAAAnl5BhIAAAAAAAUHAAAAHlJlZ2V4Q2hlY2tlcnMuRGF0ZVJlZ2V4Q2hlY2tlcgYAAAAIX21pbkRhdGUIX21heERhdGUGX3JlZ2V4C19kYXRlRm9ybWF0E1JlZ2V4QmFzZStfZXJyb3JNc2cSUmVnZXhCYXNlK19lbmFibGVkAAAEAQEADQ0kU3lzdGVtLlRleHQuUmVndWxhckV4cHJlc3Npb25zLlJlZ2V4DgAAAAECAAAAAMCl0e0O0ogAwKXR7Q7SiAkTAAAABhQAAAAEeXl5eQkSAAAAAAEIAAAABgAAAAYWAAAAAjE5AEBXIFMFUQgAgHodOSHBCABAVyBTBVEIAIB6HTkhwQgJFwAAAAYYAAAABmRkTU15eQkSAAAAAAEJAAAABwAAAADApdHtDtKIAMCl0e0O0ogJGgAAAAYbAAAACGRkTU15eXl5CRIAAAAAAQoAAAAGAAAABh0AAAACMTkAQFcgUwVRCACAeh05IcEIAEBXIFMFUQgAgHodOSHBCAkeAAAABh8AAAAIZGQuTU0ueXkJEgAAAAABCwAAAAcAAAAAwKXR7Q7SiADApdHtDtKICSEAAAAGIgAAAApkZC5NTS55eXl5CRIAAAAAAQwAAAAGAAAABiQAAAACMTkAQFcgUwVRCACAeh05IcEIAEBXIFMFUQgAgHodOSHBCAklAAAABiYAAAAHZGRNTU15eQkSAAAAAAENAAAABwAAAADApdHtDtKIAMCl0e0O0ogJKAAAAAYpAAAACWRkTU1NeXl5eQkSAAAAAAUQAAAAJFN5c3RlbS5UZXh0LlJlZ3VsYXJFeHByZXNzaW9ucy5SZWdleAIAAAAHcGF0dGVybgdvcHRpb25zAQQrU3lzdGVtLlRleHQuUmVndWxhckV4cHJlc3Npb25zLlJlZ2V4T3B0aW9ucw4AAAAOAAAABisAAAAHXlxkezJ9JAXU////K1N5c3RlbS5UZXh0LlJlZ3VsYXJFeHByZXNzaW9ucy5SZWdleE9wdGlvbnMBAAAAB3ZhbHVlX18ACA4AAAAIAAAAARMAAAAQAAAABi0AAAAHXlxkezR9JAHS////1P///wgAAAABFwAAABAAAAAGLwAAAAdeXGR7Nn0kAdD////U////CAAAAAEaAAAAEAAAAAYxAAAAB15cZHs4fSQBzv///9T///8IAAAAAR4AAAAQAAAABjMAAAAVXlxkezJ9XC5cZHsyfVwuXGR7Mn0kAcz////U////CAAAAAEhAAAAEAAAAAY1AAAAFV5cZHsyfVwuXGR7Mn1cLlxkezR9JAHK////1P///wgAAAABJQAAABAAAAAGNwAAAGVeXGR7Mn0o0Y/QvdCyfNGE0LXQsnzQvNCw0YB80LDQv9GAfNC80LDQuXzQuNGO0L180LjRjtC7fNCw0LLQs3zRgdC10L180L7QutGCfNC90L7Rj3zQtNC10Lp8MDAwKVxkezJ9JAHI////1P///wgAAAABKAAAABAAAAAGOQAAAGVeXGR7Mn0o0Y/QvdCyfNGE0LXQsnzQvNCw0YB80LDQv9GAfNC80LDQuXzQuNGO0L180LjRjtC7fNCw0LLQs3zRgdC10L180L7QutGCfNC90L7Rj3zQtNC10Lp8MDAwKVxkezR9JAHG////1P///wgAAAAL" ShowErrorMsgBox="Да" AllowErrorExit="Нет" IsError="Нет" Ids="" Id="DateExtender" Type="RegexCheckers.Extenders.DateExtender, RegexCheckers_extender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Ext Pattern="^([^\d]+)$" Ids="Name:Otch:Fam1" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker_не цифры" />
+          <Ext Pattern="^((?:(?!.*[ ]{2}))[^\s]([^A-Za-zА-я])*[^\s]|-)$" Ids="Date" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker_Date" />
+          <Ext Pattern="^([\d\!\?]{2}|[\d\!\?]{6}|-)$" Ids="DatePrikaz" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker_DatePriz" />
+          <Ext Pattern="((^(\d{2}|\d{4})[ ]\((\d{2}|\d{4})\))|^(\d{2,8})|^(\d{4}[_]{2})|^-)$" Ids="Date" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker_date" />
+          <Ext Pattern="^([^0-9]*)$" Ids="Name:Otch:Fam" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker_не цифры2" />
+          <Ext Id="SimpleDictionary" ConnectionString="" ShowDict="Always" SearchMode="Select" KeyFieldName="Key" ApplyAndStep2NextField="True" Ids="IsMR" Source="1:2" DataFieldName="Key" Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" MultiSelectSeparator=" " OnlyDictValues="True" />
+          <Ext NextValueChar="" FieldId="Name" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="Fam" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="Otch" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="Zvanie" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="Date" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="Adress" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="VK" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext NextValueChar="" FieldId="DatePriz" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer" />
+          <Ext ImportDbConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\opn-1\Octopus\ClientTools\Octopus.Apex_20140306_002\MemorialDictionary_2010-01-27.mdb;Persist Security Info=False" SearchFields="&lt;DocumentElement&gt;&#xD;&#xA;  &lt;Fields&gt;&#xD;&#xA;    &lt;id&gt;1&lt;/id&gt;&#xD;&#xA;    &lt;XRef&gt;Zvanie_1&lt;/XRef&gt;&#xD;&#xA;    &lt;DbFieldName&gt;inp&lt;/DbFieldName&gt;&#xD;&#xA;    &lt;SearchRank&gt;0&lt;/SearchRank&gt;&#xD;&#xA;    &lt;SearchDbFieldName&gt;card&lt;/SearchDbFieldName&gt;&#xD;&#xA;    &lt;Visible&gt;true&lt;/Visible&gt;&#xD;&#xA;    &lt;SearchSPName /&gt;&#xD;&#xA;    &lt;ExactSearch&gt;false&lt;/ExactSearch&gt;&#xD;&#xA;    &lt;SearchFromStart&gt;true&lt;/SearchFromStart&gt;&#xD;&#xA;    &lt;FilterColumn&gt;false&lt;/FilterColumn&gt;&#xD;&#xA;    &lt;CanBeEmpty&gt;false&lt;/CanBeEmpty&gt;&#xD;&#xA;  &lt;/Fields&gt;&#xD;&#xA;  &lt;Fields&gt;&#xD;&#xA;    &lt;id&gt;2&lt;/id&gt;&#xD;&#xA;    &lt;XRef /&gt;&#xD;&#xA;    &lt;DbFieldName&gt;card&lt;/DbFieldName&gt;&#xD;&#xA;    &lt;SearchRank&gt;1&lt;/SearchRank&gt;&#xD;&#xA;    &lt;SearchDbFieldName&gt;card&lt;/SearchDbFieldName&gt;&#xD;&#xA;    &lt;Visible&gt;true&lt;/Visible&gt;&#xD;&#xA;    &lt;SearchSPName /&gt;&#xD;&#xA;    &lt;ExactSearch&gt;false&lt;/ExactSearch&gt;&#xD;&#xA;    &lt;SearchFromStart&gt;true&lt;/SearchFromStart&gt;&#xD;&#xA;    &lt;FilterColumn&gt;false&lt;/FilterColumn&gt;&#xD;&#xA;    &lt;CanBeEmpty&gt;false&lt;/CanBeEmpty&gt;&#xD;&#xA;  &lt;/Fields&gt;&#xD;&#xA;&lt;/DocumentElement&gt;" Type="Octopus.ClientUIControls.ImportDictionary_Camo2, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" InsertDictValuesShortcut="Enter" ShowErrors="False" ImportTableName="Zvanie" Id="ImportDictionary_Camo2" />
+          <Ext Id="SimpleDictionary" ConnectionString="" ShowDict="OnChanges" SearchMode="Select" KeyFieldName="Key" ApplyAndStep2NextField="True" Ids="Fam1" Source="[отсутствует]:[неизвестный]" DataFieldName="Key" MultiSelectSeparator=" " Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" />
+          <Ext NextValueChar="" FieldId="NumNagr" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer_NumNagr" />
+          <Ext NextValueChar="" FieldId="NumPrikaz" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer_NumPrikaz" />
+          <Ext NextValueChar="" FieldId="DatePrikaz" PrevValueChar="" Type="Octopus.ClientUIControls.Sequencer, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" CurrentValueChar="*" Id="Sequencer_DatePrikaz" />
+          <Ext Id="RegExprChecker_NumPrikaz" Pattern="^([^0].*|-)$" Ids="NumPrikaz" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" ErrorMessage="№ приказа пишется БЕЗ лидирующего '0' !!!" />
+          <Ext Id="RegExprChecker_IO" Pattern="^(([\!|\?]|[А-Я])[^\d]+|\!|\?|\[неразборчиво\]|\[нет данных\]|-)$" Ids="Name:Otch" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" ErrorMessage="Фамилия, Имя и Отчество должны начинаться с ЗАГЛАВНОЙ буквы!!!" />
+          <Ext Id="RegExprChecker_NotFIO" Pattern="^((\w|\!|\?).*|-)$" Ids="DatePrikaz:NumNagr:Zvanie" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" ErrorMessage="Поле не может быть пустым!" />
+          <Ext Id="RegExprChecker_Fam" Pattern="^(([\!|\?]|[А-Я])[^\d]+|\!|\?|\[неизвестный\]|\[отсутствует\])$" Ids="Fam1" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" ErrorMessage="Фамилия, Имя и Отчество должны начинаться с ЗАГЛАВНОЙ буквы!!!" />
+          <Ext Id="SimpleDictionary" ConnectionString="" ShowDict="Always" SearchMode="Select" KeyFieldName="Key" Ids="Pr" Source="1:2" DataFieldName="Key" MultiSelectSeparator=" " Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" />
+          <Ext Id="RegExprChecker" Pattern="^((?![А-Яа-яA-Za-z]).)*$" Ids="NumPrikaz" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" ErrorMessage="№ приказа пишется без буквенных символов!!!" />
+          <Ext Pattern="^(1|2)$" Ids="Pr" Type="Octopus.ClientUIControls.RegExprChecker, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" Id="RegExprChecker" />
+          <Ext Id="SimpleDictionary" ConnectionString="" ShowDict="OnChanges" SearchMode="Select" KeyFieldName="Key" Ids="IsMS" Source="1:2" DataFieldName="Key" MultiSelectSeparator=" " Type="Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.25469, Culture=neutral, PublicKeyToken=null" />
+        </Extenders>
+      </root>
+    </Schema>
+  </Editor>
+  <AddFrame>
+    <Use>True</Use>
+    <Position>3</Position>
+    <MosaicMode>False</MosaicMode>
+  </AddFrame>
+  <CharTable>
+    <Use>False</Use>
+    <ConnectionString></ConnectionString>
+    <TableName>UNIChars</TableName>
+  </CharTable>
+  <Bookmarks>
+    <CanCloseBatchWith>True</CanCloseBatchWith>
+  </Bookmarks>
+  <XDocument>
+    <SaveEmptyElementsInXml>True</SaveEmptyElementsInXml>
+    <cbAllowRemoveOldItems>False</cbAllowRemoveOldItems>
+  </XDocument>
+  <Markup>
+    <Type>1</Type>
+    <VertStep>20</VertStep>
+    <HorzStep>100</HorzStep>
+    <Color>Red</Color>
+    <ColorAlpha>0</ColorAlpha>
+    <Holder>TableRow</Holder>
+    <Attrib>Markup</Attrib>
+    <UseAttrib>False</UseAttrib>
+    <ReadOnly>True</ReadOnly>
+    <UseMouse>True</UseMouse>
+    <CenterToMarkup>False</CenterToMarkup>
+    <ZoomToMarkup>False</ZoomToMarkup>
+    <BorderColor>Red</BorderColor>
+    <BorderColorAlpha>255</BorderColorAlpha>
+    <ShowInactive>False</ShowInactive>
+    <ColorInactive>180; 255; 255</ColorInactive>
+    <BorderColorInactive>180; 255; 255</BorderColorInactive>
+    <ColorAlphaInactive>70</ColorAlphaInactive>
+    <BorderColorAlphaInactive>70</BorderColorAlphaInactive>
+    <Color2>DarkOrange</Color2>
+    <Color2Alpha>70</Color2Alpha>
+    <Color2Inactive>253; 209; 195</Color2Inactive>
+    <Color2AlphaInactive>70</Color2AlphaInactive>
+    <DoublePassVerification>False</DoublePassVerification>
+    <Padding>0; 0; 0; 0</Padding>
+    <Color1Regex></Color1Regex>
+    <Color2Regex></Color2Regex>
+    <Color3>DarkOrange</Color3>
+    <Color3Alpha>70</Color3Alpha>
+    <Color3Inactive>253; 209; 195</Color3Inactive>
+    <Color3AlphaInactive>70</Color3AlphaInactive>
+    <Color3Regex></Color3Regex>
+    <AddSize>2</AddSize>
+  </Markup>
+  <Images>
+    <LibraryType>GdiPlus</LibraryType>
+    <LayoutMode>Один имидж</LayoutMode>
+    <GdiPlusUseScaledCaching>True</GdiPlusUseScaledCaching>
+    <GdiPlusOptionsSetScalingThreashold>True</GdiPlusOptionsSetScalingThreashold>
+    <GdiPlusOptionsScalingThreashold>51200</GdiPlusOptionsScalingThreashold>
+    <GdiPlusOptionsCacheCapacity>5</GdiPlusOptionsCacheCapacity>
+  </Images>
+  <LinkImages>
+    <Enabled>False</Enabled>
+    <RearrangeRecords>False</RearrangeRecords>
+    <MergeRecords>False</MergeRecords>
+    <MergeRecordsCopy>False</MergeRecordsCopy>
+    <AddRecords>False</AddRecords>
+    <RemoveRecords>False</RemoveRecords>
+    <RearrangeAll>False</RearrangeAll>
+  </LinkImages>
+  <GpibImport>
+    <Use>False</Use>
+    <Server>SRV-SQL</Server>
+    <Db>GPIB_2006</Db>
+    <Type>0</Type>
+    <DoCheckExistance>True</DoCheckExistance>
+    <SimpleAdapters>False</SimpleAdapters>
+    <DeleteOnlyImportedNodes>True</DeleteOnlyImportedNodes>
+  </GpibImport>
+  <Markup2>
+    <Type>0</Type>
+    <VertStep>100</VertStep>
+    <HorzStep>100</HorzStep>
+    <Color>Aqua</Color>
+    <BorderColor>Aqua</BorderColor>
+    <ColorAlpha>70</ColorAlpha>
+    <BorderColorAlpha>70</BorderColorAlpha>
+    <Holder>TableRow</Holder>
+    <UseAttrib>False</UseAttrib>
+    <Attrib>Markup2</Attrib>
+    <ReadOnly>False</ReadOnly>
+    <UseMouse>True</UseMouse>
+    <CenterToMarkup>False</CenterToMarkup>
+    <ZoomToMarkup>False</ZoomToMarkup>
+    <ShowInactive>False</ShowInactive>
+    <ColorInactive>180; 255; 255</ColorInactive>
+    <BorderColorInactive>180; 255; 255</BorderColorInactive>
+    <ColorAlphaInactive>70</ColorAlphaInactive>
+    <BorderColorAlphaInactive>70</BorderColorAlphaInactive>
+    <Color2>DarkOrange</Color2>
+    <Color2Alpha>70</Color2Alpha>
+    <Color2Inactive>253; 209; 195</Color2Inactive>
+    <Color2AlphaInactive>70</Color2AlphaInactive>
+    <DoublePassVerification>False</DoublePassVerification>
+    <Padding>0; 0; 0; 0</Padding>
+    <Color1Regex></Color1Regex>
+    <Color2Regex></Color2Regex>
+    <Color3>DarkOrange</Color3>
+    <Color3Alpha>70</Color3Alpha>
+    <Color3Inactive>253; 209; 195</Color3Inactive>
+    <Color3AlphaInactive>70</Color3AlphaInactive>
+    <Color3Regex></Color3Regex>
+    <AddSize>10</AddSize>
+  </Markup2>
+  <ImageRotations>
+    <Mode>1</Mode>
+    <UseImageTable>True</UseImageTable>
+    <XmlFieldName>rc</XmlFieldName>
+  </ImageRotations>
+</configuration>

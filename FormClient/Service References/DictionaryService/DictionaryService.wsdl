@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DictionaryService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_IFileUpload_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="BasicHttpBinding_IFileDownload_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd1" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd0" namespace="http://schemas.microsoft.com/Message" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" />
+      <xsd:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="UploadRequest">
+    <wsdl:part name="parameters" element="tns:UploadRequest" />
+  </wsdl:message>
+  <wsdl:message name="UploadRequest_Headers">
+    <wsdl:part name="DictInfo" element="tns:DictInfo" />
+  </wsdl:message>
+  <wsdl:message name="UploadResponse">
+    <wsdl:part name="parameters" element="tns:UploadResponse" />
+  </wsdl:message>
+  <wsdl:message name="UploadResponse_Headers">
+    <wsdl:part name="UploadSucceeded" element="tns:UploadSucceeded" />
+  </wsdl:message>
+  <wsdl:message name="IFileUpload_Upload_ExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/System" name="detail" element="q1:Exception" />
+  </wsdl:message>
+  <wsdl:message name="DownloadRequest">
+    <wsdl:part name="parameters" element="tns:DownloadRequest" />
+  </wsdl:message>
+  <wsdl:message name="DownloadRequest_Headers">
+    <wsdl:part name="SenderLogin" element="tns:SenderLogin" />
+  </wsdl:message>
+  <wsdl:message name="DownloadResponse">
+    <wsdl:part name="parameters" element="tns:DownloadResponse" />
+  </wsdl:message>
+  <wsdl:message name="DownloadResponse_Headers">
+    <wsdl:part name="FileName" element="tns:FileName" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDictionaryData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionaryData" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDictionaryData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionaryDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDictionaryData_ExceptionFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/System" name="detail" element="q2:Exception" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetCategories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategories" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetCategories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddCategory_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddCategory" />
+  </wsdl:message>
+  <wsdl:message name="IData_AddCategory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ChangeDictionaryStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDictionaryStatus" />
+  </wsdl:message>
+  <wsdl:message name="IData_ChangeDictionaryStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDictionaryStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_ChangeDictionaryInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDictionaryInfo" />
+  </wsdl:message>
+  <wsdl:message name="IData_ChangeDictionaryInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeDictionaryInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProjectsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectsData" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetProjectsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProjectsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetXmlFormConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetXmlFormConfig" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetXmlFormConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetXmlFormConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_UpdateXmlFormConfig_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateXmlFormConfig" />
+  </wsdl:message>
+  <wsdl:message name="IData_UpdateXmlFormConfig_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateXmlFormConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDictionariesOnTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionariesOnTask" />
+  </wsdl:message>
+  <wsdl:message name="IData_GetDictionariesOnTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDictionariesOnTaskResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IFileUpload">
+    <wsdl:operation name="Upload">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFileUpload/Upload" name="UploadRequest" message="tns:UploadRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFileUpload/UploadResponse" name="UploadResponse" message="tns:UploadResponse" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IFileUpload/UploadExceptionFault" name="ExceptionFault" message="tns:IFileUpload_Upload_ExceptionFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IFileDownload">
+    <wsdl:operation name="Download">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFileDownload/Download" name="DownloadRequest" message="tns:DownloadRequest" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFileDownload/DownloadResponse" name="DownloadResponse" message="tns:DownloadResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IData">
+    <wsdl:operation name="GetDictionaryData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetDictionaryData" message="tns:IData_GetDictionaryData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetDictionaryDataResponse" message="tns:IData_GetDictionaryData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IData/GetDictionaryDataExceptionFault" name="ExceptionFault" message="tns:IData_GetDictionaryData_ExceptionFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetCategories" message="tns:IData_GetCategories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetCategoriesResponse" message="tns:IData_GetCategories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/AddCategory" message="tns:IData_AddCategory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/AddCategoryResponse" message="tns:IData_AddCategory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDictionaryStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/ChangeDictionaryStatus" message="tns:IData_ChangeDictionaryStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ChangeDictionaryStatusResponse" message="tns:IData_ChangeDictionaryStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDictionaryInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/ChangeDictionaryInfo" message="tns:IData_ChangeDictionaryInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ChangeDictionaryInfoResponse" message="tns:IData_ChangeDictionaryInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetProjectsData" message="tns:IData_GetProjectsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetProjectsDataResponse" message="tns:IData_GetProjectsData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetXmlFormConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetXmlFormConfig" message="tns:IData_GetXmlFormConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetXmlFormConfigResponse" message="tns:IData_GetXmlFormConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateXmlFormConfig">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/UpdateXmlFormConfig" message="tns:IData_UpdateXmlFormConfig_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/UpdateXmlFormConfigResponse" message="tns:IData_UpdateXmlFormConfig_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDictionariesOnTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetDictionariesOnTask" message="tns:IData_GetDictionariesOnTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetDictionariesOnTaskResponse" message="tns:IData_GetDictionariesOnTask_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IFileUpload" type="tns:IFileUpload">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IFileUpload_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Upload">
+      <soap:operation soapAction="http://tempuri.org/IFileUpload/Upload" style="document" />
+      <wsdl:input name="UploadRequest">
+        <soap:header message="tns:UploadRequest_Headers" part="DictInfo" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UploadResponse">
+        <soap:header message="tns:UploadResponse_Headers" part="UploadSucceeded" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ExceptionFault">
+        <soap:fault use="literal" name="ExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IFileDownload" type="tns:IFileDownload">
+    <wsp:PolicyReference URI="#BasicHttpBinding_IFileDownload_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Download">
+      <soap:operation soapAction="http://tempuri.org/IFileDownload/Download" style="document" />
+      <wsdl:input name="DownloadRequest">
+        <soap:header message="tns:DownloadRequest_Headers" part="SenderLogin" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="DownloadResponse">
+        <soap:header message="tns:DownloadResponse_Headers" part="FileName" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BasicHttpBinding_IData" type="tns:IData">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetDictionaryData">
+      <soap:operation soapAction="http://tempuri.org/IData/GetDictionaryData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ExceptionFault">
+        <soap:fault use="literal" name="ExceptionFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategories">
+      <soap:operation soapAction="http://tempuri.org/IData/GetCategories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddCategory">
+      <soap:operation soapAction="http://tempuri.org/IData/AddCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDictionaryStatus">
+      <soap:operation soapAction="http://tempuri.org/IData/ChangeDictionaryStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDictionaryInfo">
+      <soap:operation soapAction="http://tempuri.org/IData/ChangeDictionaryInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectsData">
+      <soap:operation soapAction="http://tempuri.org/IData/GetProjectsData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetXmlFormConfig">
+      <soap:operation soapAction="http://tempuri.org/IData/GetXmlFormConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateXmlFormConfig">
+      <soap:operation soapAction="http://tempuri.org/IData/UpdateXmlFormConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDictionariesOnTask">
+      <soap:operation soapAction="http://tempuri.org/IData/GetDictionariesOnTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DictionaryService">
+    <wsdl:port name="BasicHttpBinding_IFileUpload" binding="tns:BasicHttpBinding_IFileUpload">
+      <soap:address location="http://localhost:8080/upload" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IFileDownload" binding="tns:BasicHttpBinding_IFileDownload">
+      <soap:address location="http://localhost:8080/download" />
+    </wsdl:port>
+    <wsdl:port name="BasicHttpBinding_IData" binding="tns:BasicHttpBinding_IData">
+      <soap:address location="http://localhost:8080/Data" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

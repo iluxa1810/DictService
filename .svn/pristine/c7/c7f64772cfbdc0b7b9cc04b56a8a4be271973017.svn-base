@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using FormClient.DictionaryService;
+using FormClient.Forms;
+using FormClient.Helpers;
+
+namespace FormClient
+{
+    public partial class AddDictForm : Form
+    {
+        public AddDictForm()
+        {
+            InitializeComponent();
+        }
+        public AddDictForm(ComboBox comboBox)
+        {
+            InitializeComponent();
+            InitCategoryCB();
+        }
+
+        void InitCategoryCB()
+        {
+            using (var client = new DataClient())
+            {
+                var category = client.GetCategories();
+                categoryBox.DataSource = category;
+                categoryBox.DisplayMember = "Name";
+                categoryBox.ValueMember = "Category_id";
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Access Data Base (.mdb)|*.mdb";
+            fileDialog.ShowDialog();
+            filePathBox.Text = fileDialog.FileName;
+        }
+
+        private void buttonUpload_Click(object sender, EventArgs e)
+        {
+            //DictionaryInfo dictInfo = new DictionaryInfo()
+            //{
+            //    Category_id = ((CategoryData)categoryBox.SelectedItem).Category_id,
+            //    FileName = Path.GetFileName(filePathBox.Text),
+            //    FriendlyName = tBoxFrendlyName.Text,
+            //    Action = ActionEnum.AddDict,
+            //    SenderLogin = AccountHelper.GetAccount(),
+            //    Description = rtbDescription.Text
+            //};
+            //using (var client = new FileUploadClient())
+            //{
+            //    Stream file = new FileStream(filePathBox.Text, FileMode.Open);
+            //    client.Upload(dictInfo, file);
+            //}
+            this.Close();
+        }
+
+        public DictionaryInfo GetUploadData()
+        {
+            DictionaryInfo dictInfo = new DictionaryInfo()
+            {
+                Category_id = ((CategoryData)categoryBox.SelectedItem).Category_id,
+                FileName = Path.GetFileName(filePathBox.Text),
+                FriendlyName = tBoxFrendlyName.Text,
+                Action = ActionEnum.AddDict,
+                SenderLogin = AccountHelper.GetAccount(),
+                Description = rtbDescription.Text
+            };
+            return dictInfo;
+        }
+
+        public string GetFilePath()
+        {
+            return filePathBox.Text;
+        }
+
+        private void addCategoryBtn_Click_1(object sender, EventArgs e)
+        {
+            using (var categoryAddForm = new AddCategoryForm())
+            {
+                categoryAddForm.ShowDialog(this);
+                InitCategoryCB();
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ActionEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AddDict" />
+      <xs:enumeration value="DelDict" />
+      <xs:enumeration value="EditDict" />
+      <xs:enumeration value="EditLink" />
+      <xs:enumeration value="EditPermission" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ActionEnum" nillable="true" type="tns:ActionEnum" />
+  <xs:complexType name="ArrayOfActionEnum">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ActionEnum" type="tns:ActionEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfActionEnum" nillable="true" type="tns:ArrayOfActionEnum" />
+  <xs:simpleType name="DictionaryStateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Available" />
+      <xs:enumeration value="Locked" />
+      <xs:enumeration value="Refreshing" />
+      <xs:enumeration value="Deleted" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DictionaryStateEnum" nillable="true" type="tns:DictionaryStateEnum" />
+</xs:schema>

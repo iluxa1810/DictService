@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using FormClient.DictionaryService;
+
+namespace FormClient.Forms
+{
+    public partial class EditDictionaryForm : Form
+    {
+        public EditDictionaryForm()
+        {
+            InitializeComponent();
+        }
+        public EditDictionaryForm(string dictId, string dictName, string categoryName, string description)
+        {
+            InitializeComponent();
+            dictionaryIdTb.Text = dictId;
+            DescriptionRtb.Text = description;
+            FrendlyNameTb.Text = dictName;
+            categoryCb.Text = categoryName;
+            using (var client = new DataClient())
+            {
+                var categoryes = client.GetCategories();
+                categoryCb.DataSource = categoryes;
+                categoryCb.DisplayMember = "Name";
+                categoryCb.ValueMember = "Category_id";
+                categoryCb.Text = categoryName;
+            }
+        }
+
+        private void uploadChkBx_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (uploadChkBx.Checked)
+            {
+                buttonFileDialog.Enabled = true;
+                return;
+            }
+            else
+            {
+                buttonFileDialog.Enabled = false;
+            }
+        }
+
+        private void resfreshBtn_Click(object sender, EventArgs e)
+        {
+            if (uploadChkBx.Checked)
+            {
+                using (var client = new FileUploadClient())
+                {
+
+                }
+            }
+            else
+            {
+                using (var client = new DataClient())
+                {
+                    var dictInfo = new DictionaryData()
+                    {
+                        Dictionary_id = Convert.ToInt32(dictionaryIdTb.Text),
+                        Category_id = ((CategoryData)categoryCb.SelectedItem).Category_id,
+                        FriendlyName = FrendlyNameTb.Text,
+                        Description = DescriptionRtb.Text
+                    };
+                    client.ChangeDictionaryInfo(dictInfo);
+                    client.ChangeDictionaryStatus(Convert.ToInt32(dictionaryIdTb.Text), DictionaryStateEnum.Available);
+                }
+            }
+        }
+    }
+}

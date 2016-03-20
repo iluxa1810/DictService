@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace FormClient.Forms
+{
+    public partial class EditDictionaryForm : Form
+    {
+        public EditDictionaryForm()
+        {
+            InitializeComponent();
+        }
+
+        private void uploadChkBx_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (uploadChkBx.Checked)
+            {
+                buttonFileDialog.Enabled = true;
+                return;
+            }
+            else
+            {
+                buttonFileDialog.Enabled = false;
+            }
+        }
+    }
+}

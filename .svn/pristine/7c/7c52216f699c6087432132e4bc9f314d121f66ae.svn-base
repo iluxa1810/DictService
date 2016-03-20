@@ -1,0 +1,107 @@
+﻿using System;
+using System.IO;
+using System.Net.Mime;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using Microsoft.Office.Core;
+using Microsoft.Office.Interop.Access;
+using Microsoft.Office.Interop.Access.Dao;
+
+namespace Common.Helpers
+{
+    public class AccessHelper
+    {
+        public void SetDbStamp(string fileName, int Dictionary_id)
+        {
+            var appClass = new Application();
+
+            appClass.Visible = false;
+            appClass.Screen.Application.Visible = false;
+            appClass.Screen.Application.UserControl = false;
+            appClass.UserControl = false;
+            appClass.AutomationSecurity = MsoAutomationSecurity.msoAutomationSecurityLow;
+            try
+            {
+                appClass.OpenCurrentDatabase(fileName, false, "");
+                try
+                {
+                    appClass.CurrentDb()
+                        .Execute(@"DROP TABLE [_DbStamp];");
+                }
+                catch (Exception)
+                {
+                }
+                appClass.CurrentDb()
+                    .Execute(@"CREATE TABLE [_DbStamp] ([Key] TEXT(255) PRIMARY KEY, [Val] TEXT(255));");
+                appClass.CurrentDb().TableDefs["_DbStamp"].Attributes = (int)TableDefAttributeEnum.dbHiddenObject;
+                appClass.CurrentDb()
+                    .Execute(String.Format(@"INSERT INTO [_DbStamp] ([Key], [Val]) VALUES ('{0}', '{1}');", "FileName",
+                        Path.GetFileName(fileName)));
+                appClass.CurrentDb()
+                    .Execute(String.Format(@"INSERT INTO [_DbStamp] ([Key], [Val]) VALUES ('{0}', '{1}');", "DbGuid",
+                        Dictionary_id));
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+
+                appClass.Quit(AcQuitOption.acQuitSaveAll);
+                NAR(appClass);
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+                System.GC.Collect();
+
+            }
+        }
+        public void CompactAndRepair(string fileName)
+        {
+            var appClass = new Application();
+            appClass.Visible = false;
+            appClass.Screen.Application.Visible = false;
+            appClass.Screen.Application.UserControl = false;
+            appClass.UserControl = false;
+            appClass.AutomationSecurity = MsoAutomationSecurity.msoAutomationSecurityLow;
+
+            string tempFile = Path.Combine(Path.GetTempPath(),
+                              Path.GetRandomFileName() + Path.GetExtension(fileName));
+            try
+            {
+                appClass.CompactRepair(fileName, tempFile, false);
+                var temp = new FileInfo(tempFile);
+                temp.CopyTo(fileName, true);
+                temp.Delete();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                appClass.Quit(AcQuitOption.acQuitSaveNone);
+                NAR(appClass);
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+                System.GC.Collect();
+            }
+        }
+        private void NAR(object o)
+        {
+            try
+            {
+                Marshal.ReleaseComObject(o);
+                o = null;
+            }
+            catch
+            {
+                o = null;
+            }
+            finally
+            {
+            }
+        }
+
+    }
+}

@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.Text;
+using WCFConsoleServer.Enums;
+
+namespace WCFConsoleServer.Contracts
+{
+    [ServiceContract]
+    public interface IData
+    {
+        [FaultContract(typeof(Exception))]
+        [OperationContract]
+        DataPackage getData(string user);
+        [OperationContract]
+        List<CategoryData> getCategoryes();
+        [OperationContract]
+        void AddCategory(string name,string description);
+    }
+
+    [DataContract]
+    public class DataPackage
+    {
+        [DataMember]
+        public List<DictionaryData> dictionaryDatas { get; set; } = new List<DictionaryData>();
+        [DataMember]
+        public List<CategoryData> Categories { get; set; } = new List<CategoryData>();
+        [DataMember]
+        public List<ActionEnum> ActionEnums { get; set; } = new List<ActionEnum>();
+    }
+    [DataContract]
+    public class DictionaryData
+    {
+        [DataMember]
+        public int Dictionary_id { get; set; }
+        [DataMember]
+        public string FriendlyName { get; set; }
+        [DataMember]
+        public int Category_id { get; set; }
+        [DataMember]
+        public string Description { get; set; }
+    }
+    [DataContract]
+    public class CategoryData
+    {
+        [DataMember]
+        public int Category_id { get; set; }
+        [DataMember]
+        public string Name { get; set; }
+    }
+}

@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using FormEditor.Forms;
+
+namespace FormEditor
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        //string xml = File.ReadAllText(@"E:\cfg2.txt", Encoding.GetEncoding(1251));
+        //XmlDocument doc = new XmlDocument();
+        //doc.LoadXml(xml);
+        //    string decoded = doc.DocumentElement.Attributes["SearchFields"].InnerText;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var path = @"E:\cfg.txt";
+            var reader = new StreamReader(path, Encoding.GetEncoding(1251));
+            XmlReader xmlReader = XmlReader.Create(reader);
+            XDocument xDoc = XDocument.Load(xmlReader);
+            List<XNode> ext =
+                xDoc.XPathSelectElements("*//Extenders")
+                    .DescendantNodes().ToList();
+            comboBox1.DataSource = ext;
+          //  comboBox1.DisplayMember = 
+        }
+
+        class SimpleDictionary
+        {
+            SimpleDictionary()
+            {
+                XElement dict=new XElement("Ext");
+                dict.Add(new XAttribute("Id",""));
+                dict.Add(new XAttribute("ConnectionString", ""));
+                dict.Add(new XAttribute("ShowDict", ""));
+                dict.Add(new XAttribute("KeyFieldName", ""));
+                dict.Add(new XAttribute("Ids", ""));
+                dict.Add(new XAttribute("Source", ""));
+                dict.Add(new XAttribute("DataFieldName", ""));
+                dict.Add(new XAttribute("MultiSelectSeparator", " "));
+                dict.Add(new XAttribute("Type", "Octopus.ClientUIControls.SimpleDictionary, BaseClientXmlEditor, Version=2.0.0.21404, Culture=neutral, PublicKeyToken=null"));
+                dict.Add(new XAttribute("DataSourceType", " "));
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            using (var frm = new SimpleDictionaryForm((XElement)comboBox1.SelectedItem))
+            {
+                frm.ShowDialog();
+            }
+            
+            //using (var frm = new TestForm(((XElement)comboBox1.SelectedItem).Attribute("Id").Value))
+            //{
+            //    frm.ShowDialog();
+            //}
+        }
+    }
+}

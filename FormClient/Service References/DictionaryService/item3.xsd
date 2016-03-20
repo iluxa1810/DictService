@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Contracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8080/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" />
+  <xs:complexType name="DictionaryInfo">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" minOccurs="0" name="Action" type="q1:ActionEnum" />
+      <xs:element minOccurs="0" name="Category_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dictionary_id" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FriendlyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SenderLogin" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryInfo" nillable="true" type="tns:DictionaryInfo" />
+  <xs:complexType name="DictionaryDataPackage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Categories" nillable="true" type="tns:ArrayOfCategoryData" />
+      <xs:element minOccurs="0" name="dictionaryDatas" nillable="true" type="tns:ArrayOfDictionaryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryDataPackage" nillable="true" type="tns:DictionaryDataPackage" />
+  <xs:complexType name="ArrayOfCategoryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryData" nillable="true" type="tns:CategoryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategoryData" nillable="true" type="tns:ArrayOfCategoryData" />
+  <xs:complexType name="CategoryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryData" nillable="true" type="tns:CategoryData" />
+  <xs:complexType name="ArrayOfDictionaryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DictionaryData" nillable="true" type="tns:DictionaryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDictionaryData" nillable="true" type="tns:ArrayOfDictionaryData" />
+  <xs:complexType name="DictionaryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Category_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dictionary_id" type="xs:int" />
+      <xs:element minOccurs="0" name="FriendlyName" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" minOccurs="0" name="State" type="q2:DictionaryStateEnum" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryData" nillable="true" type="tns:DictionaryData" />
+  <xs:complexType name="DictionaryProjectPackage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OctopusServerssDatas" nillable="true" type="tns:ArrayOfOctopusServerData" />
+      <xs:element minOccurs="0" name="ProjectDatas" nillable="true" type="tns:ArrayOfProjectData" />
+      <xs:element minOccurs="0" name="TaskDatas" nillable="true" type="tns:ArrayOfTaskData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryProjectPackage" nillable="true" type="tns:DictionaryProjectPackage" />
+  <xs:complexType name="ArrayOfOctopusServerData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OctopusServerData" nillable="true" type="tns:OctopusServerData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOctopusServerData" nillable="true" type="tns:ArrayOfOctopusServerData" />
+  <xs:complexType name="OctopusServerData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ServerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Server_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OctopusServerData" nillable="true" type="tns:OctopusServerData" />
+  <xs:complexType name="ArrayOfProjectData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProjectData" nillable="true" type="tns:ProjectData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProjectData" nillable="true" type="tns:ArrayOfProjectData" />
+  <xs:complexType name="ProjectData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Server_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectData" nillable="true" type="tns:ProjectData" />
+  <xs:complexType name="ArrayOfTaskData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TaskData" nillable="true" type="tns:TaskData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTaskData" nillable="true" type="tns:ArrayOfTaskData" />
+  <xs:complexType name="TaskData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Server_id" type="xs:int" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WCFConsoleServer.Enums" minOccurs="0" name="State" type="q3:TaskStateEnum" />
+      <xs:element minOccurs="0" name="Task_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskData" nillable="true" type="tns:TaskData" />
+  <xs:complexType name="DictionaryOnTaskPackage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Categories" nillable="true" type="tns:ArrayOfCategoryData" />
+      <xs:element minOccurs="0" name="DictionaryOnTaskDatas" nillable="true" type="tns:ArrayOfDictionaryOnTaskData" />
+      <xs:element minOccurs="0" name="dictionaryDatas" nillable="true" type="tns:ArrayOfDictionaryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryOnTaskPackage" nillable="true" type="tns:DictionaryOnTaskPackage" />
+  <xs:complexType name="ArrayOfDictionaryOnTaskData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DictionaryOnTaskData" nillable="true" type="tns:DictionaryOnTaskData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDictionaryOnTaskData" nillable="true" type="tns:ArrayOfDictionaryOnTaskData" />
+  <xs:complexType name="DictionaryOnTaskData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DictionaryOnTask_id" type="xs:int" />
+      <xs:element minOccurs="0" name="Dictionary_id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DictionaryOnTaskData" nillable="true" type="tns:DictionaryOnTaskData" />
+</xs:schema>

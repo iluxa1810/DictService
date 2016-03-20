@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using FormEditor.Enums;
+
+namespace FormEditor.Forms
+{
+    public partial class ImportDictionaryForm : Form
+    {
+        enum ShowDictEnum
+        {
+            OnChanges, Manual
+        }
+        public ImportDictionaryForm()
+        {
+            InitializeComponent();
+        }
+
+        public ImportDictionaryForm(XElement dict)
+        {
+            InitializeComponent();
+            SetDataSetToComboBoxes();
+            tbShowDictShortcut.Text=dict.Attribute("ShowDictShortcut")?.Value??"";
+            tbClearValuesShortcut.Text = dict.Attribute("ClearValuesShortcut")?.Value??"";
+            tbInsertDictValuesShortcut.Text = dict.Attribute("InsertDictValuesShortcut")?.Value??"";
+            tbImportDbConnectionString.Text = dict.Attribute("ImportDbConnectionString")?.Value??"";
+            tbImportTableName.Text = dict.Attribute("ImportTableName")?.Value??"";
+            tbLinkGroupXRef.Text = dict.Attribute("LinkGroupXRef")?.Value??"";
+            tbResultMaxRowCount.Text = dict.Attribute("ResultMaxRowCount")?.Value??"10";
+            tbSearchFields.Text = dict.Attribute("SearchFields")?.Value?? "<DocumentElement/>";
+            tbShowFormMaxCount.Text = dict.Attribute("ShowFormMaxCount")?.Value??"10";
+            tbId.Text = dict.Attribute("Id")?.Value??"";
+            tbType.Text = dict.Attribute("Type")?.Value??"";
+            cbShowDict.Text = dict.Attribute("ShowDict")?.Value?? ShowDictEnum.OnChanges.ToString();
+            cbShowErrors.Text = dict.Attribute("ShowErrors")?.Value ?? BoolEnum.False.ToString();
+            cbApplyAndStep2NextField.Text = dict.Attribute("ApplyAndStep2NextField")?.Value ?? BoolEnum.False.ToString();
+        }
+        void SetDataSetToComboBoxes()
+        {
+            cbShowDict.DataSource = Enum.GetValues(typeof (ShowDictEnum));
+            cbApplyAndStep2NextField.DataSource= Enum.GetValues(typeof(BoolEnum));
+            cbShowErrors.DataSource= Enum.GetValues(typeof(BoolEnum));
+        }
+
+        private void btnAddSearchFields_Click(object sender, EventArgs e)
+        {
+            DataSet fieldsDs = new DataSet();
+            var reader = new StringReader(tbSearchFields.Text);
+            fieldsDs.ReadXml(reader);
+            using (var frm = new AddFieldsForm(fieldsDs))
+            {
+                frm.ShowDialog();
+            }
+        }
+    }
+}

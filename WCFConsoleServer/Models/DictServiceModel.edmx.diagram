@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5ff96a894f1e443394be4f35f726bc4b" Name="Diagram1">
+        <EntityTypeShape EntityType="DictServiceModel.ActionType" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.ChangeType" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Dictionary" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.DictionaryCategory" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.DictionaryChangeHistory" Width="1.5" PointX="5.25" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.DictionaryOnTask" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.DictionaryState" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Module" Width="1.5" PointX="0.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.OctopusServer" Width="1.5" PointX="1.5" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Permission" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Project" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.ProjectState" Width="1.5" PointX="1.5" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Queue" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Task" Width="1.5" PointX="3" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.User" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.UserChangeHistory" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.UserPermission" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DictServiceModel.Version" Width="1.5" PointX="5.25" PointY="23.875" IsExpanded="true" />
+        <AssociationConnector Association="DictServiceModel.FK_Queue_ActionType" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_UserChangeHistory_Action" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_DictionaryChangeHistory_ChangeType" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Dictionary_DictionaryCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Dictionary_DictionaryState" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Dictionary_ParentDictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_DictionaryChangeHistory_Dictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_DictionaryOnTask_Dictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Queue_Dictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_UserChangeHistory_Dictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.PK_Version_Dictionary" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_DictionaryChangeHistory_UserChangeHistory" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_DictionaryOnTask_Task" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Module_OctopusServer" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Task_Module" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Project_OctopusServer" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_UserPermission_Permission" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Project_ProjectState" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Task_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Queque_UserChangeHistory" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_Queue_Task" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_UserChangeHistory_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.FK_UserPermission_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DictServiceModel.ActionTypePermission" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

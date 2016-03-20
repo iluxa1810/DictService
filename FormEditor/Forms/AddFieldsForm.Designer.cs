@@ -1,0 +1,188 @@
+﻿namespace FormEditor.Forms
+{
+    partial class AddFieldsForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.XRef = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DbFieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SearchRank = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SearchDbFieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SearchSPName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ExactSearch = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.SearchFromStart = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.FilterColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.CanBeEmpty = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.XRef,
+            this.DbFieldName,
+            this.SearchRank,
+            this.SearchDbFieldName,
+            this.SearchSPName,
+            this.Visible,
+            this.ExactSearch,
+            this.SearchFromStart,
+            this.FilterColumn,
+            this.CanBeEmpty});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(939, 178);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // XRef
+            // 
+            this.XRef.HeaderText = "XRef";
+            this.XRef.Name = "XRef";
+            // 
+            // DbFieldName
+            // 
+            this.DbFieldName.HeaderText = "Поле в БД";
+            this.DbFieldName.Name = "DbFieldName";
+            // 
+            // SearchRank
+            // 
+            dataGridViewCellStyle1.NullValue = "0";
+            this.SearchRank.DefaultCellStyle = dataGridViewCellStyle1;
+            this.SearchRank.HeaderText = "Порядок поиска";
+            this.SearchRank.Name = "SearchRank";
+            // 
+            // SearchDbFieldName
+            // 
+            this.SearchDbFieldName.HeaderText = "Поисковое поле";
+            this.SearchDbFieldName.Name = "SearchDbFieldName";
+            // 
+            // SearchSPName
+            // 
+            this.SearchSPName.HeaderText = "Поисковая процедура";
+            this.SearchSPName.Name = "SearchSPName";
+            // 
+            // Visible
+            // 
+            this.Visible.HeaderText = "Отображать";
+            this.Visible.Name = "Visible";
+            this.Visible.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Visible.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ExactSearch
+            // 
+            this.ExactSearch.HeaderText = "Точное совпадение";
+            this.ExactSearch.Name = "ExactSearch";
+            this.ExactSearch.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExactSearch.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // SearchFromStart
+            // 
+            this.SearchFromStart.HeaderText = "Искать с начала строки";
+            this.SearchFromStart.Name = "SearchFromStart";
+            this.SearchFromStart.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SearchFromStart.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // FilterColumn
+            // 
+            this.FilterColumn.HeaderText = "Фильтр";
+            this.FilterColumn.Name = "FilterColumn";
+            this.FilterColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FilterColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // CanBeEmpty
+            // 
+            this.CanBeEmpty.HeaderText = "Необязательное";
+            this.CanBeEmpty.Name = "CanBeEmpty";
+            this.CanBeEmpty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CanBeEmpty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // btnOK
+            // 
+            this.btnOK.Location = new System.Drawing.Point(698, 210);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.TabIndex = 1;
+            this.btnOK.Text = "ОК";
+            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(832, 210);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // AddFieldsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(963, 245);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.dataGridView1);
+            this.Name = "AddFieldsForm";
+            this.Text = "AddFieldsForm";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn XRef;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DbFieldName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SearchRank;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SearchDbFieldName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SearchSPName;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ExactSearch;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn SearchFromStart;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn FilterColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn CanBeEmpty;
+    }
+}
