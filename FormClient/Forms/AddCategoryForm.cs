@@ -25,7 +25,7 @@ namespace FormClient.Forms
                 try
                 {
                     using (var client = new DataClient()) 
-                    { 
+                    {  
                         client.AddCategory(tbName.Text, rtbDiscription.Text); 
                     }
                     DialogResult = DialogResult.OK; 
