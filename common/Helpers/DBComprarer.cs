@@ -22,7 +22,7 @@ namespace Common.Helpers
 
         public enum ChangeType
         {
-            AddTable, RemoveTable, AddColumn, RemoveColumn, EditValue, RemoveRow, AddValue, ChangeKey, ChangeColumnType
+            AddTable, RemoveTable, AddColumn, RemoveColumn, EditValue, RemoveRow, AddRow, ChangeKey, ChangeColumnType
         }
         public class Change
         {
@@ -222,7 +222,7 @@ namespace Common.Helpers
                        x => new Change()
                        {
                            TableName = tableName,
-                           ChangeType = ChangeType.AddValue,
+                           ChangeType = ChangeType.AddRow,
                            PrimaryKey = x[primaryKey].ToString(),
                            ColumnName = columnName,
                            OldValue = null,
