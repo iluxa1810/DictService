@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TrashForTest", "TrashForTes
 		Cfg.xml = Cfg.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBComparer", "BDComparer\BDComparer\DBComparer.csproj", "{71AD9460-6D9E-4FEC-BAEA-13F86C891329}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,14 +72,6 @@ Global
 		{46E187FD-AFF5-446E-88DF-DDAC00EF648C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46E187FD-AFF5-446E-88DF-DDAC00EF648C}.Release|x86.ActiveCfg = Release|Any CPU
 		{46E187FD-AFF5-446E-88DF-DDAC00EF648C}.Release|x86.Build.0 = Release|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Debug|x86.Build.0 = Debug|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Release|x86.ActiveCfg = Release|Any CPU
-		{71AD9460-6D9E-4FEC-BAEA-13F86C891329}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

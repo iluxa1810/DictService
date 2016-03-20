@@ -9,6 +9,7 @@ CREATE TABLE OctopusServer (
 	ServerIp NVARCHAR(20) NOT NULL ,
 	OctopusDbName NVARCHAR(20) NOT NULL ,
 	ServerName  NVARCHAR(20) NOT NULL ,
+	ClientToolsPath  NVARCHAR(255) NOT NULL ,
 	CONSTRAINT PK_OctopusServer PRIMARY KEY (Server_id))
 GO
 CREATE TABLE Module (

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using ADOX;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Access;
 using Microsoft.Office.Interop.Access.Dao;
@@ -14,6 +16,29 @@ namespace Common.Helpers
 {
     public class AccessHelper
     {
+       public static void CheckExistPrimaryKey(string connStr)
+        {
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                string[] restrictions = new string[4];
+                restrictions[3] = "Table";
+                DataTable tables = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, restrictions);
+                foreach (DataRow table in tables.Rows)
+                {
+                    if (table[2].ToString() == "_DbStamp"|| table[2].ToString().Contains("~"))
+                    {
+                        continue;
+                    }
+                    var schema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Primary_Keys,
+                        new[] {null, null, table[2]});
+                    if (schema.AsEnumerable().Any())
+                    {
+                        throw new KeyNotFoundException($"На таблице {table[2]} отсутсвует первичный ключ!");
+                    }
+                }
+            }
+        }
         public static string CreateMdbConnectionString(string filepath)
         {
             var builder2 = new OleDbConnectionStringBuilder();
@@ -49,6 +74,21 @@ namespace Common.Helpers
               throw new Exception("Неопознанный словарь!");
             }
             return dictionary_id;
+        }
+
+        public static void SetDbStampADOX(string fileName, int Dictionary_id)
+        {
+            Catalog cat = new Catalog();
+            object ret;
+            ADODB.Connection conn = new ADODB.Connection();
+            conn.ConnectionString = CreateMdbConnectionString(fileName);
+            conn.Open();
+            cat.ActiveConnection = conn;
+            conn.Execute(@"CREATE TABLE [_DbStamp] ([Key] TEXT(255) PRIMARY KEY, [Val] TEXT(255));", out ret, 0);
+            conn.Execute($"INSERT INTO [_DbStamp] ([Key], [Val]) VALUES ('Dictionary_id', '{Dictionary_id}');", out ret, 0);
+            Table tbl = cat.Tables["_DbStamp"];
+            tbl.Properties["Jet OLEDB:Table Hidden In Access"].Value = true;
+            conn.Close();
         }
         public static void SetDbStamp(string fileName, int Dictionary_id)
         {

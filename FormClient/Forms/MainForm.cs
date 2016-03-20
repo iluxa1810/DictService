@@ -54,7 +54,17 @@ namespace FormClient
                     return;
                 }
                 dictInfo = form.GetUploadData();
-                path = ZipHelper.CreateZipDictionary(form.GetFilePath(), FileHelper.GetTemporaryDirectory());
+                var mdbPath = form.GetFilePath();
+                try
+                {
+                    AccessHelper.CheckExistPrimaryKey(AccessHelper.CreateMdbConnectionString(mdbPath));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                path = ZipHelper.CreateZipDictionary(mdbPath, FileHelper.GetTemporaryDirectory());
             }
             var id = StartTask(this,
                 new TaskEventArgs() { Name = $"Добавление {dictInfo.FriendlyName}", Status = "Started" });
