@@ -17,8 +17,12 @@ namespace WCFConsoleServer.Models
         public int DictionaryHistory_id { get; set; }
         public int UserHistory_id { get; set; }
         public int Dictionary_id { get; set; }
-        public string Message { get; set; }
         public int Change_id { get; set; }
+        public string TableName { get; set; }
+        public string PrimaryKey { get; set; }
+        public string ColumnName { get; set; }
+        public string OldValue { get; set; }
+        public string NewValue { get; set; }
     
         public virtual ChangeType ChangeType { get; set; }
         public virtual Dictionary Dictionary { get; set; }

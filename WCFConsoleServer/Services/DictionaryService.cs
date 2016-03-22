@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -108,13 +110,22 @@ namespace WCFConsoleServer.Services
                     };
                 }
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException dbEx)
             {
-                Console.WriteLine(ex);
+
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
                 return new UploadResponse
                 {
                     UploadSucceeded = false,
-                    Error = ex.ToString()
+                    Error = dbEx.ToString()
                 };
             }
         }
@@ -157,21 +168,43 @@ namespace WCFConsoleServer.Services
             ZipHelper.CreateZipDictionary(file, uploadPath);
             return dictInfo.Dictionary_id.Value;
         }
-        void ExistDictFileProcessing(Stream stream, Dictionary dict)
+        void ExistDictFileProcessing(Stream stream, Dictionary dict,UserChangeHistory change)
         {
             var tmpFolder = FileHelper.GetTemporaryDirectory();
             var tmpFile = Path.Combine(tmpFolder, Path.GetFileName(dict.FileName));
             FileHelper.LoadFileFromStream(stream, tmpFile);
             ZipHelper.UnZip(tmpFile);
-            var file = Directory.GetFiles(tmpFolder, "*.mdb").Single();
-            if (AccessHelper.CheckIdentifyInfo(file) == dict.Dictionary_id)
+            var newFile = Directory.GetFiles(tmpFolder, "*.mdb").Single();
+
+            if (AccessHelper.CheckIdentifyInfo(newFile) == dict.Dictionary_id)
             {
-                CreateDictionaryVersion(dict);
-                File.Move(tmpFile, dict.PathToDict);
+                var unZipFoler=ZipHelper.UnZipToTempDir(dict.PathToDict);
+                var oldDict= Directory.GetFiles(unZipFoler, "*.mdb").Single();
+                var changes = DBComparer.CompareDataBase(newFile, oldDict);
+                if (changes.Any())
+                {
+                    using (var db = new DictServiceEntities())
+                    {
+                        db.DictionaryChangeHistories.AddRange(changes.Select(x => new DictionaryChangeHistory()
+                        {
+                            UserHistory_id = change.UserHistory_id,
+                            Change_id = (int)x.ChangeType,
+                            Dictionary_id = dict.Dictionary_id,
+                            TableName = x.TableName,
+                            PrimaryKey = x.PrimaryKey,
+                            ColumnName = x.ColumnName,
+                            OldValue = x.OldValue,
+                            NewValue = x.NewValue
+                        }));
+                        db.SaveChanges();
+                    }
+                    CreateDictionaryVersion(dict);
+                    File.Move(tmpFile, dict.PathToDict);
+                }
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Попытка загрузить неизвестный словарь");
             }
         }
         private void AddNewDicionary(DictionaryInfo dictInfo, User user, Stream stream)
@@ -214,10 +247,6 @@ namespace WCFConsoleServer.Services
                 var dict = db.Dictionaries.Single(x => x.Dictionary_id == dictInfo.Dictionary_id.Value);
                 dict.DictionaryState = db.DictionaryStates.Single(x => x.State_id == (int)DictionaryStateEnum.Refreshing);
                 db.Entry(dict).State = EntityState.Modified;
-                db.SaveChanges();
-                ExistDictFileProcessing(stream, dict);
-                dict.DictionaryState = db.DictionaryStates.Single(x => x.State_id == (int)DictionaryStateEnum.Available);
-                db.Entry(dict).State = EntityState.Modified;
                 var change = new UserChangeHistory()
                 {
                     Dictionary_id = dict.Dictionary_id,
@@ -226,6 +255,11 @@ namespace WCFConsoleServer.Services
                     User_id = user.User_id
                 };
                 db.UserChangeHistories.Add(change);
+                db.SaveChanges();
+                ExistDictFileProcessing(stream, dict, change);
+                dict.DictionaryState = db.DictionaryStates.Single(x => x.State_id == (int)DictionaryStateEnum.Available);
+                db.Entry(dict).State = EntityState.Modified;
+
                 db.SaveChanges();
                 AddNewQueue(dict.Dictionary_id, ActionEnum.EditDict, change.UserHistory_id);
                 return dict;

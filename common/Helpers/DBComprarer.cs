@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Common.Helpers
 {
-   static class DBComparer
+   static public class DBComparer
     {
 
         //static void Main(string[] args)
@@ -35,14 +35,14 @@ namespace Common.Helpers
         }
 
 
-        public static List<Change> CompareDataBase(string newConnStr, string oldConnStr)
-        {
+        public static List<Change> CompareDataBase(string newMdbPath, string oldMdbPath)
+        { 
             List<DataTable> newDataTables;
             List<DataTable> oldDataTables;
             try
             {
-                newDataTables = GetDataTables(newConnStr);
-                oldDataTables = GetDataTables(oldConnStr);
+                newDataTables = GetDataTables(AccessHelper.CreateMdbConnectionString(newMdbPath));
+                oldDataTables = GetDataTables(AccessHelper.CreateMdbConnectionString(oldMdbPath));
             }
             catch (Exception ex)
             {

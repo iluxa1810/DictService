@@ -32,7 +32,7 @@ namespace Common.Helpers
                     }
                     var schema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Primary_Keys,
                         new[] {null, null, table[2]});
-                    if (schema.AsEnumerable().Any())
+                    if (!schema.AsEnumerable().Any())
                     {
                         throw new KeyNotFoundException($"На таблице {table[2]} отсутсвует первичный ключ!");
                     }

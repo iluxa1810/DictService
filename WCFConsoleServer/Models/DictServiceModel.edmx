@@ -55,9 +55,13 @@
           </Key>
           <Property Name="DictionaryHistory_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserHistory_id" Type="int" Nullable="false" />
-          <Property Name="Dictionary_id" Type="int" Nullable="false" />
-          <Property Name="Message" Type="nvarchar" MaxLength="255" />
           <Property Name="Change_id" Type="int" Nullable="false" />
+          <Property Name="Dictionary_id" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrimaryKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColumnName" Type="nvarchar" MaxLength="50" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DictionaryOnTask">
           <Key>
@@ -697,11 +701,15 @@
           <Property Name="DictionaryHistory_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserHistory_id" Type="Int32" Nullable="false" />
           <Property Name="Dictionary_id" Type="Int32" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Change_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ChangeType" Relationship="Self.FK_DictionaryChangeHistory_ChangeType" FromRole="DictionaryChangeHistory" ToRole="ChangeType" />
           <NavigationProperty Name="Dictionary" Relationship="Self.FK_DictionaryChangeHistory_Dictionary" FromRole="DictionaryChangeHistory" ToRole="Dictionary" />
           <NavigationProperty Name="UserChangeHistory" Relationship="Self.FK_DictionaryChangeHistory_UserChangeHistory" FromRole="DictionaryChangeHistory" ToRole="UserChangeHistory" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColumnName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DictionaryOnTask">
           <Key>
@@ -1335,10 +1343,14 @@
           <EntitySetMapping Name="DictionaryChangeHistories">
             <EntityTypeMapping TypeName="DictServiceModel.DictionaryChangeHistory">
               <MappingFragment StoreEntitySet="DictionaryChangeHistory">
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="PrimaryKey" ColumnName="PrimaryKey" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
                 <ScalarProperty Name="DictionaryHistory_id" ColumnName="DictionaryHistory_id" />
                 <ScalarProperty Name="UserHistory_id" ColumnName="UserHistory_id" />
                 <ScalarProperty Name="Dictionary_id" ColumnName="Dictionary_id" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="Change_id" ColumnName="Change_id" />
               </MappingFragment>
             </EntityTypeMapping>

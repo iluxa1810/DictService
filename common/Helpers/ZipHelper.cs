@@ -78,5 +78,16 @@ namespace Common.Helpers
                 zipFile.ExtractAll(dstDir);
             }
         }
+
+        public static string UnZipToTempDir(string zipPath)
+        {
+            string dstDir;
+            using (var zipFile = new ZipFile(zipPath, Encoding.GetEncoding(866)))
+            {
+                dstDir = FileHelper.GetTemporaryDirectory();
+                zipFile.ExtractAll(dstDir);
+            }
+            return dstDir;
+        }
     }
 }
